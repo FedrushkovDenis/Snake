@@ -42,7 +42,7 @@
     <ClInclude Include="WindowClass.hpp">
       <Filter>Файлы заголовков\WndPart</Filter>
     </ClInclude>
-    <ClInclude Include="Stuff.h">
+    <ClInclude Include="Stuff.hpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

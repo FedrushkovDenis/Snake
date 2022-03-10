@@ -1,7 +1,7 @@
 #include "Game.hpp"
 #include "Field.hpp"
 #include <Windows.h>
-#include "Stuff.h"
+#include "Stuff.hpp"
 
 Game::~Game() 
 {

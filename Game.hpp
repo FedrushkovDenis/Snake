@@ -5,7 +5,7 @@
 #include <cstdlib>
 #include "Field.hpp"
 #include "Snake.hpp"
-#include "Stuff.h"
+#include "Stuff.hpp"
 
 class Game
 {

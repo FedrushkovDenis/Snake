@@ -143,7 +143,7 @@
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="Singleton.hpp" />
     <ClInclude Include="Snake.hpp" />
-    <ClInclude Include="Stuff.h" />
+    <ClInclude Include="Stuff.hpp" />
     <ClInclude Include="WindowClass.hpp" />
   </ItemGroup>
   <ItemGroup>

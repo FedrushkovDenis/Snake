@@ -1,4 +1,4 @@
-Current progress: ||||||||------ 50%
+Current progress: |||||||||----- 55%
 
 TODO: 
 1) Winapi Gui

@@ -2,10 +2,12 @@
 #include <cstdlib>
 #include <cstdio>
 #include <locale.h>
-#include "Game.hpp"
-#include "Singleton.hpp"
-#include "WindowClass.hpp"
+#include "Game/Game.hpp"
+#include "Singleton/Singleton.hpp"
+#include "WindowClasses/WindowClass.hpp"
 #include <Windows.h>
+
+#define DEBUG
 
 void gotoxy(int x, int y)
 {
@@ -31,21 +33,10 @@ BOOL ShowConsoleCursor(BOOL bShow)
 	return TRUE;
 }
 
+#ifdef DEBUG
+
 int main()
 {
-	/*Singleton::createMainMenu();
-	Singleton::createGameWindow();
-
-	MainMenu* myMenu = Singleton::getMainMenu();
-	GameWindow* myGameWindow = Singleton::getGameWindow();
-
-	myMenu->setSettings(L"MyMainMenu");
-	myGameWindow->setSettings(L"MyGameWindow");
-
-	myMenu->StartWindow();
-
-	return 0;*/
-
 	ShowConsoleCursor(FALSE);
 
 	Singleton::createGame();
@@ -96,72 +87,26 @@ int main()
 	Singleton::deleteGame();
 
 	return 0;
-	
-
-
-	//Singleton::getGame().
-
-
-
-
-
-	//Singletone mysing(5,5);
-	//Game myGame;
-	////myGame.printField();
-	//myGame.field.printField();
 }
 
-//void setField(Field* field, short rows, short columns)
-//{
-//	field->rows = rows;
-//	field->columns = columns;
-//	field->field = (char**)malloc(field->rows * sizeof(char*));
-//	for (int i = 0; i < field->rows; i++)
-//	{
-//		field->field[i] = (char*)malloc(field->columns * sizeof(char));
-//	}
-//	for (int i = 0; i < field->rows; i++)
-//	{
-//		for (int j = 0; j < field->columns; j++)
-//		{
-//			field->field[i][j] = ' ';
-//			if (i == 0 || j == 0 || i == (field->rows - 1) || j == (field->columns - 1))
-//				field->field[i][j] = '#';
-//		}
-//	}
-//}
-//
-//void printField(Field* field)
-//{
-//	for (int i = 0; i < field->rows; i++)
-//	{
-//		for (int j = 0; j < field->columns; j++)
-//		{
-//			printf("%c", field->field[i][j]);
-//		}
-//		printf("\n");
-//	}
-//}
-//
-//void DestroyField(Field* field)
-//{
-//	for (int i = 0; i < field->rows; i++)
-//	{
-//		free(field->field[i]);
-//	}
-//	free(field->field);
-//}
-//
-//void setShape(Field* field)
-//{
-//
-//}
-//
-//int main()
-//{
-//	Snake mySnake;
-//	Field myField;
-//	setField(&myField, 15, 15);
-//	printField(&myField);
-//	DestroyField(&myField);
-//}
+#else 
+
+int main()
+{
+	Singleton::createMainMenu();
+	Singleton::createGameWindow();
+
+	MainMenu* myMenu = Singleton::getMainMenu();
+	GameWindow* myGameWindow = Singleton::getGameWindow();
+
+	myMenu->setSettings(L"MyMainMenu");
+	myGameWindow->setSettings(L"MyGameWindow");
+
+	myMenu->StartWindow();
+
+	return 0;
+}
+
+#endif // DEBUG
+
+

@@ -12,46 +12,47 @@ using namespace std;
 class Window 
 {
 protected:
+
     HDC windowDC;    // \brief Device Context for your window.
-    HWND window;     // \brief Handle to your window.
-    WNDCLASS wclass; // \brief WNDCLASS for registration your window class.
+    HWND hwnd;     // \brief Handle to your window.
+    WNDCLASS wndclass; // \brief WNDCLASS for registration your window class.
     LPCWSTR wndClassName; // \brief Class name for registration your window class.
 
     // \brief Template for window event handler.
     virtual LRESULT WINAPI wndProcessor(_In_ HWND hWnd, _In_ UINT Msg, _In_ WPARAM wParam, _In_ LPARAM lParam)
-    {
-        return DefWindowProc(hWnd, Msg, wParam, lParam);
+    { 
+        return DefWindowProc(hWnd, Msg, wParam, lParam); 
     }
 
     // \brief Template for window class registration.
-    //virtual WNDCLASS WINAPI ClassRegister(LPCWSTR classname, WNDPROC wndproc);
-    
-    // \brief Template for draw function.
-    //virtual void Redraw();
+    virtual WNDCLASS WINAPI ClassRegister(LPCWSTR classname, WNDPROC wndproc) 
+    { 
+        WNDCLASS wclass{};
+        return wclass; 
+    };
+
+    virtual HDC getDC() { return windowDC; };
+    virtual HWND getHWND() { return hwnd; }
+
 };
 
 
-class GameWindow : Window
+class GameWindow : protected Window
 {
 private:
     static LRESULT WINAPI wndProcessor(_In_ HWND hWnd, _In_ UINT Msg, _In_ WPARAM wParam, _In_ LPARAM lParam);
     WNDCLASS WINAPI ClassRegister(LPCWSTR classname, WNDPROC wndproc);
 public:
-    LPCWSTR wndClassName;
-    HWND hwnd;
-    HDC wDC;
-    WNDCLASS wndclass;
     LPRECT rctScr;
     static bool isOpen;
 
-    GameWindow()
-    {
-
-    }
+    GameWindow();
 
     DWORD WINAPI StartWindow(HWND parent);
 
     void setSettings(LPCWSTR wndclassname);
+    HDC getDC();
+    HWND getHWND();
 };
 
 class MainMenu : protected Window
@@ -60,33 +61,17 @@ private:
     static LRESULT WINAPI wndProcessor(_In_ HWND hWnd, _In_ UINT Msg, _In_ WPARAM wParam, _In_ LPARAM lParam);
     WNDCLASS WINAPI ClassRegister(LPCWSTR classname, WNDPROC wndproc);
 public:
-    HWND hwnd;
-    LPCWSTR wndClassName;
-    HDC wDC;
-    WNDCLASS wndclass;
     LPRECT rctScr;
     static bool isOpen;
 
-    void* testfuncptr;
-
-    MainMenu()
-    {
-
-    }
+    MainMenu();
 
     void StartWindow();
 
     void setSettings(LPCWSTR wndclassname);
+    HDC getDC();
+    HWND getHWND();
 };
-
-
-
-
-
-
-
-
-
 
 
 #endif // !_WINDOWCLASS

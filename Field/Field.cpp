@@ -1,5 +1,5 @@
 #include "Field.hpp"
-#include "Stuff.hpp"
+#include "..\Stuff.hpp"
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>

@@ -27,42 +27,42 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Field.hpp">
-      <Filter>Файлы заголовков\Logic</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.hpp">
-      <Filter>Файлы заголовков\Logic</Filter>
-    </ClInclude>
-    <ClInclude Include="Singleton.hpp">
-      <Filter>Файлы заголовков\Logic</Filter>
-    </ClInclude>
-    <ClInclude Include="Snake.hpp">
-      <Filter>Файлы заголовков\Logic</Filter>
-    </ClInclude>
-    <ClInclude Include="WindowClass.hpp">
-      <Filter>Файлы заголовков\WndPart</Filter>
-    </ClInclude>
     <ClInclude Include="Stuff.hpp">
       <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Snake\Snake.hpp">
+      <Filter>Файлы заголовков\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton\Singleton.hpp">
+      <Filter>Файлы заголовков\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Game.hpp">
+      <Filter>Файлы заголовков\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Field\Field.hpp">
+      <Filter>Файлы заголовков\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowClasses\WindowClass.hpp">
+      <Filter>Файлы заголовков\WndPart</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Snake.cpp">
+    <ClCompile Include="Singleton\Singleton.cpp">
       <Filter>Исходные файлы\Logic</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
+    <ClCompile Include="Field\Field.cpp">
       <Filter>Исходные файлы\Logic</Filter>
     </ClCompile>
-    <ClCompile Include="Singleton.cpp">
+    <ClCompile Include="Game\Game.cpp">
       <Filter>Исходные файлы\Logic</Filter>
     </ClCompile>
-    <ClCompile Include="Field.cpp">
+    <ClCompile Include="Snake\Snake.cpp">
       <Filter>Исходные файлы\Logic</Filter>
     </ClCompile>
-    <ClCompile Include="WindowClasses.cpp">
+    <ClCompile Include="WindowClasses\WindowClasses.cpp">
       <Filter>Исходные файлы\WndPart</Filter>
     </ClCompile>
   </ItemGroup>

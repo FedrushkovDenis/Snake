@@ -1,11 +1,13 @@
-#include "Singleton.hpp"
-#include "WindowClass.hpp"
+#include "..\Singleton\Singleton.hpp"
+#include "..\WindowClasses\WindowClass.hpp"
 
 Singleton::Singleton() {}
 
 Game* Singleton::myGame = 0;
 MainMenu* Singleton::myMenu = 0;
 GameWindow* Singleton::myGameWindow = 0;
+
+// Game/Logic
 
 Game* Singleton::getGame()
 {
@@ -29,6 +31,9 @@ void Singleton::deleteGame()
 }
 
 
+
+// Menu/Window
+
 MainMenu* Singleton::getMainMenu()
 {
 	if (myMenu)
@@ -43,6 +48,10 @@ void Singleton::createMainMenu()
 		myMenu = new MainMenu;
 	}
 }
+
+
+
+// Game/Window
 
 GameWindow* Singleton::getGameWindow()
 {

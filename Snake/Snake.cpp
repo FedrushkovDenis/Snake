@@ -1,4 +1,4 @@
-#include "Snake.hpp"
+#include "..\Snake\Snake.hpp"
 
 Snake::Snake(char** map)
 {

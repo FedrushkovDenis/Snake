@@ -3,9 +3,9 @@
 
 #include <cstdio>
 #include <cstdlib>
-#include "Field.hpp"
-#include "Snake.hpp"
-#include "Stuff.hpp"
+#include "..\Field\Field.hpp"
+#include "..\Snake\Snake.hpp"
+#include "..\Stuff.hpp"
 
 class Game
 {

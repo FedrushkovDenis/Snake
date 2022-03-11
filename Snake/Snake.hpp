@@ -2,7 +2,7 @@
 #define _SNAKE
 
 #include <Windows.h>
-#include "Stuff.hpp"
+#include "..\Stuff.hpp"
 
 enum Direction {dirUp, dirLeft, dirDown, dirRight};
 

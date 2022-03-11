@@ -1,14 +1,20 @@
-#include "WindowClass.hpp"
-#include "Singleton.hpp"
+#include "..\WindowClasses\WindowClass.hpp"
+#include "..\Singleton\Singleton.hpp"
 
 bool MainMenu::isOpen = false;
 bool GameWindow::isOpen = false;
+
+GameWindow::GameWindow() {}
+MainMenu::MainMenu() {}
 
 void GameWindow::setSettings(LPCWSTR wndclassname)
 {
     wndClassName = wndclassname;
     wndclass = ClassRegister(wndClassName, wndProcessor);
 }
+
+HDC GameWindow::getDC() { return windowDC; };
+HWND GameWindow::getHWND() { return hwnd; }
 
 DWORD WINAPI GameWindow::StartWindow(HWND parent)
 {
@@ -34,7 +40,7 @@ DWORD WINAPI GameWindow::StartWindow(HWND parent)
     }
     free(rctScr);
     GameWindow::isOpen = false;
-    ShowWindow(Singleton::getMainMenu()->hwnd, SW_SHOW);
+    ShowWindow(Singleton::getMainMenu()->getHWND(), SW_SHOW);
     return 0;
 }
 
@@ -89,24 +95,16 @@ LRESULT WINAPI GameWindow::wndProcessor(_In_ HWND hWnd, _In_ UINT Msg, _In_ WPAR
     else return DefWindowProc(hWnd, Msg, wParam, lParam);
 }
 
+
+
+
+
+
+
 /* Main menu class */
-//class MainMenu : protected Window
-//{
-//private:
-//    static LRESULT WINAPI wndProcessor(_In_ HWND hWnd, _In_ UINT Msg, _In_ WPARAM wParam, _In_ LPARAM lParam);
-//    WNDCLASS WINAPI ClassRegister(LPCWSTR classname, WNDPROC wndproc);
-//public:
-//    LPCWSTR wndClassName;
-//    HWND hwnd;
-//    HDC wDC;
-//    WNDCLASS wndclass;
-//    LPRECT rctScr;
-//    static bool first;
-//
-//    
-//
-//    
-//};
+
+HDC MainMenu::getDC() { return windowDC; };
+HWND MainMenu::getHWND() { return hwnd; }
 
 void MainMenu::setSettings(LPCWSTR wndclassname)
 {

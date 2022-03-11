@@ -139,20 +139,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Field.hpp" />
-    <ClInclude Include="Game.hpp" />
-    <ClInclude Include="Singleton.hpp" />
-    <ClInclude Include="Snake.hpp" />
+    <ClInclude Include="Field\Field.hpp" />
+    <ClInclude Include="Game\Game.hpp" />
+    <ClInclude Include="Singleton\Singleton.hpp" />
+    <ClInclude Include="Snake\Snake.hpp" />
     <ClInclude Include="Stuff.hpp" />
-    <ClInclude Include="WindowClass.hpp" />
+    <ClInclude Include="WindowClasses\WindowClass.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Field.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="WindowClasses.cpp" />
-    <ClCompile Include="Singleton.cpp" />
-    <ClCompile Include="Snake.cpp" />
+    <ClCompile Include="Field\Field.cpp" />
+    <ClCompile Include="Game\Game.cpp" />
+    <ClCompile Include="Singleton\Singleton.cpp" />
+    <ClCompile Include="Snake\Snake.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="WindowClasses\WindowClasses.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Progress.md" />

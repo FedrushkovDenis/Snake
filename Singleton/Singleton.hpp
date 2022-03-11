@@ -1,8 +1,8 @@
 #ifndef _SINGLETON
 #define _SINGLETON
 
-#include "WindowClass.hpp"
-#include "Game.hpp"
+#include "..\WindowClasses\WindowClass.hpp"
+#include "..\Game\Game.hpp"
 
 class Singleton
 {

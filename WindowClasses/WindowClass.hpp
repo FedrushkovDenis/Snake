@@ -45,6 +45,8 @@ private:
 public:
     LPRECT rctScr;
     static bool isOpen;
+    HBITMAP BM_Grass;
+    HBITMAP BM_Wall;
 
     GameWindow();
 
@@ -53,6 +55,9 @@ public:
     void setSettings(LPCWSTR wndclassname);
     HDC getDC();
     HWND getHWND();
+
+    void DrawBitmap(HDC hDC, int x, int y, HBITMAP hBitmap);
+    void Redraw(int x, int y);
 };
 
 class MainMenu : protected Window

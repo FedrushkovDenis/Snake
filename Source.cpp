@@ -7,7 +7,7 @@
 #pragma comment(linker, "/SUBSYSTEM:CONSOLE")
 #else
 
-#pragma comment(linker, "/SUBSYSTEM:WINDOWS")
+//#pragma comment(linker, "/SUBSYSTEM:WINDOWS")
 
 #endif // DEBUG
 
@@ -19,7 +19,6 @@
 #include "Singleton/Singleton.hpp"
 #include "WindowClasses/WindowClass.hpp"
 #include <Windows.h>
-
 #ifdef DEBUG
 
 void gotoxy(int x, int y)
@@ -107,13 +106,13 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hpi, LPSTR cmdline, int ss)
 	Singleton::hInst = hInst; // Сохраняем дескриптор модуля для дальнейшей загрузки ресурсов. Подробнее https://docs.microsoft.com/en-us/windows/win32/learnwin32/winmain--the-application-entry-point
 
 	Singleton::createGame();
+	Singleton::createMainMenu();
+	Singleton::createGameWindow();
+
 	Game* myGame = Singleton::getGame();
 	Builder myBuilder(ROWS, COLUMNS);
 
 	myBuilder.buildbyReference(&Singleton::getGame()->field);
-
-	Singleton::createMainMenu();
-	Singleton::createGameWindow();
 
 	MainMenu* myMenu = Singleton::getMainMenu();
 	GameWindow* myGameWindow = Singleton::getGameWindow();

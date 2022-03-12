@@ -58,6 +58,7 @@ public:
 
     void DrawBitmap(HDC hDC, int x, int y, HBITMAP hBitmap);
     void Redraw(int x, int y);
+    void StartGame();
 };
 
 class MainMenu : protected Window

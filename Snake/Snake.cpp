@@ -41,19 +41,23 @@ void Snake::drawOnMap()
 {
 	if (dir == dirRight)
 	{
-		map[y][x] = '>';
+		Head = '>';
+		map[y][x] = Head;
 	}
 	else if (dir == dirLeft)
 	{
-		map[y][x] = '<';
+		Head = '<';
+		map[y][x] = Head;
 	}
 	else if (dir == dirDown)
 	{
-		map[y][x] = 'V';
+		Head = 'V';
+		map[y][x] = Head;
 	}
 	else if (dir == dirUp)
 	{
-		map[y][x] = 'A';
+		Head = 'A';
+		map[y][x] = Head;
 	}
 
 	for (int i = 0; i < len; i++)

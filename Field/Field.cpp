@@ -43,13 +43,13 @@ void Field::CreatePortals()
 	portals[0].y = 5;
 
 	portals[1].x = 5;
-	portals[1].y = 20;
+	portals[1].y = 15;
 
-	portals[2].x = 20;
+	portals[2].x = 15;
 	portals[2].y = 5;
 
-	portals[3].x = 20;
-	portals[3].y = 20;
+	portals[3].x = 15;
+	portals[3].y = 15;
 }
 
 void Field::drawPortals()

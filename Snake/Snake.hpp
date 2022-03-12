@@ -22,6 +22,7 @@ public:
 	void addTailSegment(int _x, int _y);
 	void MoveTail(int _x, int _y);
 
+	char Head;
 	int x, y;
 	char** map;
 	Direction dir;

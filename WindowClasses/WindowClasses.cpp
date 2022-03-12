@@ -4,20 +4,19 @@
 #include "..\resource.h"
 #include "..\Stuff.hpp"
 
-bool MainMenu::isOpen = false;
 bool GameWindow::isOpen = false;
 
 GameWindow::GameWindow() {}
-MainMenu::MainMenu() {}
+
+HDC GameWindow::getDC() { return windowDC; };
+
+HWND GameWindow::getHWND() { return hwnd; }
 
 void GameWindow::setSettings(LPCWSTR wndclassname)
 {
     wndClassName = wndclassname;
     wndclass = ClassRegister(wndClassName, wndProcessor);
 }
-
-HDC GameWindow::getDC() { return windowDC; };
-HWND GameWindow::getHWND() { return hwnd; }
 
 DWORD WINAPI GameWindow::StartWindow(HWND parent)
 {
@@ -32,11 +31,11 @@ DWORD WINAPI GameWindow::StartWindow(HWND parent)
     
     BM_Wall = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP1), IMAGE_BITMAP, 32, 32, NULL);
     BM_Grass = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP2), IMAGE_BITMAP, 32, 32, NULL);
-    //BM_Wall = (HBITMAP)LoadImage(NULL, L"wall.bmp", IMAGE_BITMAP, 32, 32, LR_LOADFROMFILE);
 
     windowDC = GetDC(hwnd);
 
     Redraw(32, 32);
+    StartGame();
 
     MSG msg;
 
@@ -48,11 +47,54 @@ DWORD WINAPI GameWindow::StartWindow(HWND parent)
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
+        else
+        {
+            Game* myGame = Singleton::getGame();
+            if (Singleton::getGame()->UserControl('W', 'S', 'A', 'D'))
+            {
+                myGame->snake.Init(3, 8, dirDown);
+                myGame->snake.addTailSegment(3, 4);
+                myGame->snake.addTailSegment(3, 5);
+                myGame->snake.addTailSegment(3, 6);
+                myGame->snake.addTailSegment(3, 7);
+            }
+            myGame->field.clearField();
+
+            myGame->snake.drawOnMap();
+            Singleton::getGameWindow()->Redraw(32, 32);
+            Sleep(100);
+        }
     }
     free(rctScr);
     GameWindow::isOpen = false;
     ShowWindow(Singleton::getMainMenu()->getHWND(), SW_SHOW);
     return 0;
+}
+
+void GameWindow::StartGame()
+{
+    Game* myGame = Singleton::getGame();
+
+    myGame->snake.ConnectToMap(myGame->field.getCharField());
+
+    myGame->snake.Init(3, 8, dirDown);
+    myGame->snake.addTailSegment(3, 4);
+    myGame->snake.addTailSegment(3, 5);
+    myGame->snake.addTailSegment(3, 6);
+    myGame->snake.addTailSegment(3, 7);
+
+    myGame->field.CreatePortals();
+
+    for (short i = 0; i < PORTALCOUNT; i++)
+    {
+        myGame->field.addPortal(myGame->field.getPortals()[i]);
+    }
+
+    myGame->field.addFruit(10, 10);
+    myGame->field.addFruit(12, 12);
+    myGame->field.addFruit(14, 14);
+
+    myGame->snake.drawOnMap();
 }
 
 void GameWindow::Redraw(int x, int y)
@@ -66,41 +108,33 @@ void GameWindow::Redraw(int x, int y)
     SelectObject(memDC, GetStockObject(DC_PEN));
     SetDCPenColor(memDC, RGB(255, 255, 255));
     Rectangle(memDC, 0, 0, 1920, 1080);
-    //TextOut(memDC, 180, 30, L"Press 'R' to start generate field", 34);
+    
     int curX = x;
     int curY = y;
 
     for (short i = 0; i < ROWS; i++)
     {
-        curY = y;
+        curX = x;
         for (short j = 0; j < COLUMNS; j++)
         {
-            if (Singleton::getGame()->field.getCharField()[i][j] == '#')
+            if (Singleton::getGame()->field.getCharField()[i][j] == '#' ||
+                Singleton::getGame()->field.getCharField()[i][j] == '+' ||
+                Singleton::getGame()->field.getCharField()[i][j] == Singleton::getGame()->snake.Head)
                 DrawBitmap(memDC, curX, curY, BM_Wall);
+            if (Singleton::getGame()->field.getCharField()[i][j] == '@')
+            {
+                SelectObject(memDC, GetStockObject(DC_BRUSH));
+                SetDCBrushColor(memDC, RGB(19, 48, 128));
+                SelectObject(memDC, GetStockObject(DC_PEN));
+                SetDCPenColor(memDC, RGB(19, 48, 128));
+                Rectangle(memDC, curX, curY, curX+32, curY+32);
+            }
             if (Singleton::getGame()->field.getCharField()[i][j] == ' ')
                 DrawBitmap(memDC, curX, curY, BM_Grass);
-            curY += 32;
-        }
-        curX += 32;
-    }
-
-    /*for (int i = 0; i < myField.row; i++)
-    {
-        curX = x;
-        for (int j = 0; j < myField.column; j++)
-        {
-            if (myField.field[i][j] == Wall)
-            {
-                DrawBitmap(memDC, curX, curY, hWall);
-            }
-            else if (myField.field[i][j] == Path || myField.field[i][j] == START)
-            {
-                DrawBitmap(memDC, curX, curY, hGrass);
-            }
             curX += 32;
         }
         curY += 32;
-    }*/
+    }
 
     BitBlt(windowDC, 0, 0, rctScr->right - rctScr->left, rctScr->bottom - rctScr->top, memDC, 0, 0, SRCCOPY);
 
@@ -130,11 +164,28 @@ LRESULT WINAPI GameWindow::wndProcessor(_In_ HWND hWnd, _In_ UINT Msg, _In_ WPAR
         PostQuitMessage(0);
     else if (Msg == WM_KEYDOWN)
     {
-
+        
     }
     else if (Msg == WM_CHAR)
     {
-        cout << "GameWindow: " << (char)wParam << endl;
+        if (wParam == VK_ESCAPE)
+        {
+            DestroyWindow(Singleton::getGameWindow()->getHWND());
+        }
+        Game* myGame = Singleton::getGame();
+        if (Singleton::getGame()->UserControl('W', 'S', 'A', 'D'))
+        {
+            myGame->snake.Init(3, 8, dirDown);
+            myGame->snake.addTailSegment(3, 4);
+            myGame->snake.addTailSegment(3, 5);
+            myGame->snake.addTailSegment(3, 6);
+            myGame->snake.addTailSegment(3, 7);
+        }
+        myGame->field.clearField();
+
+        myGame->snake.drawOnMap();
+        Singleton::getGameWindow()->Redraw(32, 32);
+        Sleep(100);
     }
     else if (Msg == WM_SIZE)
     {
@@ -178,10 +229,10 @@ void GameWindow::DrawBitmap(HDC hDC, int x, int y, HBITMAP hBitmap)
     {
         // Для контекста памяти устанавливаем тот же
         // режим отображения, что используется в
-        // контексте отображени¤
+        // контексте отображения
         SetMapMode(hMemDC, GetMapMode(hDC));
 
-        // Определяем размеры изображени¤
+        // Определяем размеры изображения
         GetObject(hBitmap, sizeof(BITMAP), (LPSTR)&bm);
 
         ptSize.x = bm.bmWidth;   // ширина
@@ -216,7 +267,12 @@ void GameWindow::DrawBitmap(HDC hDC, int x, int y, HBITMAP hBitmap)
 
 /* Main menu class */
 
+bool MainMenu::isOpen = false;
+
+MainMenu::MainMenu() {}
+
 HDC MainMenu::getDC() { return windowDC; };
+
 HWND MainMenu::getHWND() { return hwnd; }
 
 void MainMenu::setSettings(LPCWSTR wndclassname)
@@ -245,6 +301,7 @@ void MainMenu::StartWindow()
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
+        else Sleep(100);
     }
     free(rctScr);
 }

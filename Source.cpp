@@ -103,6 +103,7 @@ int main()
 
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hpi, LPSTR cmdline, int ss)
 {
+	srand(time(0));
 	Singleton::hInst = hInst; // Сохраняем дескриптор модуля для дальнейшей загрузки ресурсов. Подробнее https://docs.microsoft.com/en-us/windows/win32/learnwin32/winmain--the-application-entry-point
 
 	Singleton::createGame();

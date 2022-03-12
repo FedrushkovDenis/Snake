@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClInclude Include="Field\Field.hpp" />
     <ClInclude Include="Game\Game.hpp" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Singleton\Singleton.hpp" />
     <ClInclude Include="Snake\Snake.hpp" />
     <ClInclude Include="Stuff.hpp" />
@@ -156,6 +157,13 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Progress.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Snake.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="data\grass.bmp" />
+    <Image Include="data\wall.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -45,6 +45,9 @@
     <ClInclude Include="WindowClasses\WindowClass.hpp">
       <Filter>Файлы заголовков\WndPart</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -70,5 +73,18 @@
     <Text Include="Progress.md">
       <Filter>Файлы ресурсов</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Snake.rc">
+      <Filter>Файлы ресурсов</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="data\wall.bmp">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="data\grass.bmp">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
   </ItemGroup>
 </Project>

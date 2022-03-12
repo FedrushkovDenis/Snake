@@ -1,4 +1,4 @@
-// Чтобы посмотреть на систему под капотом раскомментируйте DEBUG
+// Р§С‚РѕР±С‹ РїРѕСЃРјРѕС‚СЂРµС‚СЊ РЅР° СЃРёСЃС‚РµРјСѓ РїРѕРґ РєР°РїРѕС‚РѕРј СЂР°СЃРєРѕРјРјРµРЅС‚РёСЂСѓР№С‚Рµ DEBUG
 
 //#define DEBUG
 
@@ -104,7 +104,7 @@ int main()
 
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hpi, LPSTR cmdline, int ss)
 {
-	Singleton::hInst = hInst; // Сохраняем дескриптор модуля для дальнейшей загрузки ресурсов. Подробнее https://docs.microsoft.com/en-us/windows/win32/learnwin32/winmain--the-application-entry-point
+	Singleton::hInst = hInst; // РЎРѕС…СЂР°РЅСЏРµРј РґРµСЃРєСЂРёРїС‚РѕСЂ РјРѕРґСѓР»СЏ РґР»СЏ РґР°Р»СЊРЅРµР№С€РµР№ Р·Р°РіСЂСѓР·РєРё СЂРµСЃСѓСЂСЃРѕРІ. РџРѕРґСЂРѕР±РЅРµРµ https://docs.microsoft.com/en-us/windows/win32/learnwin32/winmain--the-application-entry-point
 
 	Singleton::createGame();
 	Game* myGame = Singleton::getGame();

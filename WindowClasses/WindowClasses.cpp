@@ -181,7 +181,7 @@ void GameWindow::DrawBitmap(HDC hDC, int x, int y, HBITMAP hBitmap)
         // контексте отображени¤
         SetMapMode(hMemDC, GetMapMode(hDC));
 
-        // Определ¤ем размеры изображени¤
+        // Определяем размеры изображени¤
         GetObject(hBitmap, sizeof(BITMAP), (LPSTR)&bm);
 
         ptSize.x = bm.bmWidth;   // ширина

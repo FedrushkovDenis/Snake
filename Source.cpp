@@ -1,3 +1,16 @@
+// Чтобы посмотреть на систему под капотом раскомментируйте DEBUG
+
+//#define DEBUG
+
+#ifdef DEBUG
+
+#pragma comment(linker, "/SUBSYSTEM:CONSOLE")
+#else
+
+#pragma comment(linker, "/SUBSYSTEM:WINDOWS")
+
+#endif // DEBUG
+
 #include <iostream>
 #include <cstdlib>
 #include <cstdio>
@@ -7,7 +20,7 @@
 #include "WindowClasses/WindowClass.hpp"
 #include <Windows.h>
 
-#define DEBUG
+#ifdef DEBUG
 
 void gotoxy(int x, int y)
 {
@@ -32,8 +45,6 @@ BOOL ShowConsoleCursor(BOOL bShow)
 		return FALSE;
 	return TRUE;
 }
-
-#ifdef DEBUG
 
 int main()
 {
@@ -85,14 +96,22 @@ int main()
 	}
 
 	Singleton::deleteGame();
-
+	system("pause");
 	return 0;
 }
 
 #else 
 
-int main()
+int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hpi, LPSTR cmdline, int ss)
 {
+	Singleton::hInst = hInst; // Сохраняем дескриптор модуля для дальнейшей загрузки ресурсов. Подробнее https://docs.microsoft.com/en-us/windows/win32/learnwin32/winmain--the-application-entry-point
+
+	Singleton::createGame();
+	Game* myGame = Singleton::getGame();
+	Builder myBuilder(ROWS, COLUMNS);
+
+	myBuilder.buildbyReference(&Singleton::getGame()->field);
+
 	Singleton::createMainMenu();
 	Singleton::createGameWindow();
 

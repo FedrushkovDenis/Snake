@@ -3,6 +3,7 @@
 
 Singleton::Singleton() {}
 
+HINSTANCE Singleton::hInst = 0;
 Game* Singleton::myGame = 0;
 MainMenu* Singleton::myMenu = 0;
 GameWindow* Singleton::myGameWindow = 0;

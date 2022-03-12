@@ -8,7 +8,7 @@
 
 #define PORTALCOUNT 4
 
-#define ROWS 28
-#define COLUMNS 30
+#define ROWS 20
+#define COLUMNS 20
 
 #endif // !_STUFF

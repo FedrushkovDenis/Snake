@@ -19,6 +19,7 @@
 #include "Singleton/Singleton.hpp"
 #include "WindowClasses/WindowClass.hpp"
 #include <Windows.h>
+
 #ifdef DEBUG
 
 void gotoxy(int x, int y)
@@ -47,6 +48,7 @@ BOOL ShowConsoleCursor(BOOL bShow)
 
 int main()
 {
+	srand(time(0));
 	ShowConsoleCursor(FALSE);
 
 	Singleton::createGame();

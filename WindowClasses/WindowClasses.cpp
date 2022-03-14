@@ -18,6 +18,53 @@ void GameWindow::setSettings(LPCWSTR wndclassname)
     wndclass = ClassRegister(wndClassName, wndProcessor);
 }
 
+void GameWindow::ResourceLoading()
+{
+    BM_Wall = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP1), IMAGE_BITMAP, 32, 32, NULL);
+    BM_Grass = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP2), IMAGE_BITMAP, 32, 32, NULL);
+
+    // Red Portal resources
+    BM_RedPortal[0] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP3), IMAGE_BITMAP, 32, 32, NULL);
+    BM_RedPortal[1] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP4), IMAGE_BITMAP, 32, 32, NULL);
+    BM_RedPortal[2] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP5), IMAGE_BITMAP, 32, 32, NULL);
+    BM_RedPortal[3] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP6), IMAGE_BITMAP, 32, 32, NULL);
+    BM_RedPortal[4] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP7), IMAGE_BITMAP, 32, 32, NULL);
+    BM_RedPortal[5] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP8), IMAGE_BITMAP, 32, 32, NULL);
+    BM_RedPortal[6] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP9), IMAGE_BITMAP, 32, 32, NULL);
+    BM_RedPortal[7] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP10), IMAGE_BITMAP, 32, 32, NULL);
+    BM_RedPortal[8] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP11), IMAGE_BITMAP, 32, 32, NULL);
+    BM_RedPortal[9] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP12), IMAGE_BITMAP, 32, 32, NULL);
+    BM_RedPortal[10] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP13), IMAGE_BITMAP, 32, 32, NULL);
+
+    // Blue Portal resources 
+
+    BM_BluePortal[0] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP14), IMAGE_BITMAP, 32, 32, NULL);
+    BM_BluePortal[1] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP15), IMAGE_BITMAP, 32, 32, NULL);
+    BM_BluePortal[2] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP16), IMAGE_BITMAP, 32, 32, NULL);
+    BM_BluePortal[3] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP17), IMAGE_BITMAP, 32, 32, NULL);
+    BM_BluePortal[4] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP18), IMAGE_BITMAP, 32, 32, NULL);
+    BM_BluePortal[5] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP19), IMAGE_BITMAP, 32, 32, NULL);
+    BM_BluePortal[6] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP20), IMAGE_BITMAP, 32, 32, NULL);
+    BM_BluePortal[7] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP21), IMAGE_BITMAP, 32, 32, NULL);
+    BM_BluePortal[8] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP22), IMAGE_BITMAP, 32, 32, NULL);
+    BM_BluePortal[9] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP23), IMAGE_BITMAP, 32, 32, NULL);
+    BM_BluePortal[10] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP24), IMAGE_BITMAP, 32, 32, NULL);
+}
+
+void GameWindow::ResourceDestroying()
+{
+    DeleteObject(BM_Wall);
+    DeleteObject(BM_Grass);
+    for (short i = 0; i < 11; i++)
+    {
+        DeleteObject(BM_RedPortal[i]);
+    }
+    for (short i = 0; i < 11; i++)
+    {
+        DeleteObject(BM_BluePortal[i]);
+    }
+}
+
 DWORD WINAPI GameWindow::StartWindow(HWND parent)
 {
     GameWindow::isOpen = true;
@@ -28,9 +75,8 @@ DWORD WINAPI GameWindow::StartWindow(HWND parent)
         WS_OVERLAPPEDWINDOW | WS_VISIBLE,
         (rctScr->right / 2) - 400, (rctScr->bottom / 4 - 200), 800, 800,
         parent, NULL, NULL, NULL);
-    
-    BM_Wall = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP1), IMAGE_BITMAP, 32, 32, NULL);
-    BM_Grass = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP2), IMAGE_BITMAP, 32, 32, NULL);
+
+    ResourceLoading();
 
     windowDC = GetDC(hwnd);
 
@@ -66,6 +112,7 @@ DWORD WINAPI GameWindow::StartWindow(HWND parent)
         }
     }
     free(rctScr);
+    ResourceDestroying();
     GameWindow::isOpen = false;
     ShowWindow(Singleton::getMainMenu()->getHWND(), SW_SHOW);
     return 0;
@@ -108,6 +155,14 @@ void GameWindow::Redraw(int x, int y)
     SelectObject(memDC, GetStockObject(DC_PEN));
     SetDCPenColor(memDC, RGB(255, 255, 255));
     Rectangle(memDC, 0, 0, 1920, 1080);
+
+    static int BMRP_tickrate = 0; // tickrate to drawing BitMap Red Portal (BMRP)
+    static int BMRP_order = 0;    // frame counter for BMBP
+    static int BMRP_times = 0;    // Synchronization mech to draw frame every 2 ticks, not one
+
+    static int BMBP_tickrate = 0; // tickrate to drawing BitMap Blue Portal (BMBP)
+    static int BMBP_order = 0;    // etc...
+    static int BMBP_times = 0;
     
     int curX = x;
     int curY = y;
@@ -121,13 +176,43 @@ void GameWindow::Redraw(int x, int y)
                 Singleton::getGame()->field.getCharField()[i][j] == '+' ||
                 Singleton::getGame()->field.getCharField()[i][j] == Singleton::getGame()->snake.Head)
                 DrawBitmap(memDC, curX, curY, BM_Wall);
-            if (Singleton::getGame()->field.getCharField()[i][j] == '@')
+            if (Singleton::getGame()->field.getCharField()[i][j] == REDPORTAL)
             {
-                SelectObject(memDC, GetStockObject(DC_BRUSH));
-                SetDCBrushColor(memDC, RGB(19, 48, 128));
-                SelectObject(memDC, GetStockObject(DC_PEN));
-                SetDCPenColor(memDC, RGB(19, 48, 128));
-                Rectangle(memDC, curX, curY, curX+32, curY+32);
+                DrawBitmap(memDC, curX, curY, BM_RedPortal[0]);
+                if (BMRP_tickrate >= 30)
+                {
+                    DrawBitmap(memDC, curX, curY, BM_RedPortal[BMRP_order]);
+                    BMRP_times++;
+                    if (BMRP_times % 2 == 0 && BMRP_times != 0)
+                    {
+                        BMRP_order++;
+                    }
+                }
+                if (BMRP_order > 10)
+                {
+                    BMRP_tickrate = 0;
+                    BMRP_order = 0;
+                    BMRP_times = 0;
+                }
+            }
+            else if (Singleton::getGame()->field.getCharField()[i][j] == BLUEPORTAL)
+            {
+                DrawBitmap(memDC, curX, curY, BM_BluePortal[0]);
+                if (BMBP_tickrate >= 45)
+                {
+                    DrawBitmap(memDC, curX, curY, BM_BluePortal[BMBP_order]);
+                    BMBP_times++;
+                    if (BMBP_times % 2 == 0 && BMBP_times != 0)
+                    {
+                        BMBP_order++;
+                    }
+                }
+                if (BMBP_order > 10)
+                {
+                    BMBP_tickrate = 0;
+                    BMBP_order = 0;
+                    BMBP_times = 0;
+                }
             }
             if (Singleton::getGame()->field.getCharField()[i][j] == ' ')
                 DrawBitmap(memDC, curX, curY, BM_Grass);
@@ -140,6 +225,8 @@ void GameWindow::Redraw(int x, int y)
 
     DeleteDC(memDC);
     DeleteObject(memBM);
+    BMRP_tickrate++;
+    BMBP_tickrate++;
 }
 
 WNDCLASS WINAPI GameWindow::ClassRegister(LPCWSTR classname, WNDPROC wndproc)

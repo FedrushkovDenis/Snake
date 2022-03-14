@@ -4,7 +4,8 @@
 #define lenLim 1000
 #define FRUIT '*'
 #define TAIL '+'
-#define PORTAL '@'
+#define REDPORTAL 'R'
+#define BLUEPORTAL 'B'
 
 #define PORTALCOUNT 4
 

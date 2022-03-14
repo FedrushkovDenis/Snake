@@ -43,18 +43,31 @@ int Game::UserControl(char w, char s, char a, char d)
 	if (snake.dir == dirDown)
 		snake.y++;
 
-	if (field.getCharField()[snake.y][snake.x] == PORTAL)
+	if (field.getCharField()[snake.y][snake.x] == REDPORTAL)
 	{
 		int place = 0;
 		for (int i = 0; i < PORTALCOUNT; i++)
 		{
-			if (snake.x == field.getPortals()[i].x && snake.y == field.getPortals()[i].y)
+			if (snake.x == field.getPortals()[i].portal.x && snake.y == field.getPortals()[i].portal.y && field.getPortals()[i].type == REDPORTAL)
 			{
 				place = i;
 				break;
 			}
 		}
-		snakeTeleport(field.getPortals()[abs(place - 3)].x, field.getPortals()[abs(place - 3)].y);
+		snakeTeleport(field.getPortals()[abs(place - 3)].portal.x, field.getPortals()[abs(place - 3)].portal.y);
+	}
+	else if (field.getCharField()[snake.y][snake.x] == BLUEPORTAL)
+	{
+		int place = 0;
+		for (int i = 0; i < PORTALCOUNT; i++)
+		{
+			if (snake.x == field.getPortals()[i].portal.x && snake.y == field.getPortals()[i].portal.y && field.getPortals()[i].type == BLUEPORTAL)
+			{
+				place = i;
+				break;
+			}
+		}
+		snakeTeleport(field.getPortals()[abs(place - 3)].portal.x, field.getPortals()[abs(place - 3)].portal.y);
 	}
 
 	if (field.getCharField()[snake.y][snake.x] == FRUIT)
@@ -69,7 +82,7 @@ int Game::UserControl(char w, char s, char a, char d)
 				ptrField[y][x] != '#' && ptrField[y][x] != '|' &&
 				ptrField[y][x] != '-' && ptrField[y][x] != 'V' &&
 				ptrField[y][x] != 'A' && ptrField[y][x] != '<' &&
-				ptrField[y][x] != '>' && ptrField[y][x] != PORTAL)
+				ptrField[y][x] != '>' && ptrField[y][x] != REDPORTAL && ptrField[y][x] != BLUEPORTAL)
 			{
 				field.addFruit(x, y);
 				break;

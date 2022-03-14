@@ -48,6 +48,9 @@ public:
     HBITMAP BM_Grass;
     HBITMAP BM_Wall;
 
+    HBITMAP BM_RedPortal[11];
+    HBITMAP BM_BluePortal[11];
+
     GameWindow();
 
     DWORD WINAPI StartWindow(HWND parent);
@@ -59,6 +62,8 @@ public:
     void DrawBitmap(HDC hDC, int x, int y, HBITMAP hBitmap);
     void Redraw(int x, int y);
     void StartGame();
+    void ResourceLoading();
+    void ResourceDestroying();
 };
 
 class MainMenu : protected Window

@@ -6,6 +6,12 @@
 
 class Builder;
 
+struct Portal 
+{
+	POINT portal;
+	char type;
+};
+
 // Двумерное поле для игры
 class Field
 {
@@ -13,7 +19,7 @@ private:
 	short rows;
 	short columns;
 	char** field;
-	POINT portals[PORTALCOUNT];
+	Portal portals[PORTALCOUNT];
 	void drawPortals();
 
 	friend Builder; // Обозначение дружественного класса Строителя. (см. далее)
@@ -23,7 +29,7 @@ public:
 	~Field();
 
 	void addFruit(int x, int y);
-	void addPortal(POINT a);
+	void addPortal(Portal a);
 	void CreatePortals();
 
 
@@ -33,7 +39,7 @@ public:
 	char** getCharField();
 	short getRows();
 	short getColumns();
-	POINT* getPortals();
+	Portal* getPortals();
 };
 
 

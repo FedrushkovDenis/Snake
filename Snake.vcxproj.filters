@@ -25,6 +25,12 @@
     <Filter Include="Файлы заголовков\WndPart">
       <UniqueIdentifier>{66112628-d62d-456a-a321-f56c4579b502}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы ресурсов\RP">
+      <UniqueIdentifier>{bd6acdac-ca8d-44aa-95b2-4f42947f726e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы ресурсов\BP">
+      <UniqueIdentifier>{41a6d6f0-8b64-4a95-95aa-5bccc074f0f8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stuff.hpp">
@@ -85,6 +91,72 @@
     </Image>
     <Image Include="data\grass.bmp">
       <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="data\red portal\RP1.bmp">
+      <Filter>Файлы ресурсов\RP</Filter>
+    </Image>
+    <Image Include="data\red portal\RP2.bmp">
+      <Filter>Файлы ресурсов\RP</Filter>
+    </Image>
+    <Image Include="data\red portal\RP3.bmp">
+      <Filter>Файлы ресурсов\RP</Filter>
+    </Image>
+    <Image Include="data\red portal\RP4.bmp">
+      <Filter>Файлы ресурсов\RP</Filter>
+    </Image>
+    <Image Include="data\red portal\RP5.bmp">
+      <Filter>Файлы ресурсов\RP</Filter>
+    </Image>
+    <Image Include="data\red portal\RP6.bmp">
+      <Filter>Файлы ресурсов\RP</Filter>
+    </Image>
+    <Image Include="data\red portal\RP7.bmp">
+      <Filter>Файлы ресурсов\RP</Filter>
+    </Image>
+    <Image Include="data\red portal\RP8.bmp">
+      <Filter>Файлы ресурсов\RP</Filter>
+    </Image>
+    <Image Include="data\red portal\RP9.bmp">
+      <Filter>Файлы ресурсов\RP</Filter>
+    </Image>
+    <Image Include="data\red portal\RP10.bmp">
+      <Filter>Файлы ресурсов\RP</Filter>
+    </Image>
+    <Image Include="data\red portal\RP11.bmp">
+      <Filter>Файлы ресурсов\RP</Filter>
+    </Image>
+    <Image Include="data\blue portal\BP1.bmp">
+      <Filter>Файлы ресурсов\BP</Filter>
+    </Image>
+    <Image Include="data\blue portal\BP2.bmp">
+      <Filter>Файлы ресурсов\BP</Filter>
+    </Image>
+    <Image Include="data\blue portal\BP3.bmp">
+      <Filter>Файлы ресурсов\BP</Filter>
+    </Image>
+    <Image Include="data\blue portal\BP4.bmp">
+      <Filter>Файлы ресурсов\BP</Filter>
+    </Image>
+    <Image Include="data\blue portal\BP5.bmp">
+      <Filter>Файлы ресурсов\BP</Filter>
+    </Image>
+    <Image Include="data\blue portal\BP6.bmp">
+      <Filter>Файлы ресурсов\BP</Filter>
+    </Image>
+    <Image Include="data\blue portal\BP7.bmp">
+      <Filter>Файлы ресурсов\BP</Filter>
+    </Image>
+    <Image Include="data\blue portal\BP8.bmp">
+      <Filter>Файлы ресурсов\BP</Filter>
+    </Image>
+    <Image Include="data\blue portal\BP9.bmp">
+      <Filter>Файлы ресурсов\BP</Filter>
+    </Image>
+    <Image Include="data\blue portal\BP10.bmp">
+      <Filter>Файлы ресурсов\BP</Filter>
+    </Image>
+    <Image Include="data\blue portal\BP11.bmp">
+      <Filter>Файлы ресурсов\BP</Filter>
     </Image>
   </ItemGroup>
 </Project>

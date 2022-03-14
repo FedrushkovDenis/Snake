@@ -22,7 +22,7 @@ short Field::getRows()
 	return rows;
 }
 
-POINT* Field::getPortals()
+Portal* Field::getPortals()
 {
 	return portals;
 }
@@ -32,31 +32,35 @@ void Field::addFruit(int x, int y)
 	this->field[y][x] = FRUIT;
 }
 
-void Field::addPortal(POINT a)
+void Field::addPortal(Portal a)
 {
-	this->field[a.y][a.x] = PORTAL;
+	this->field[a.portal.y][a.portal.x] = a.type;
 }
 
 void Field::CreatePortals()
 {
-	portals[0].x = 5;
-	portals[0].y = 5;
+	portals[0].type = REDPORTAL;
+	portals[0].portal.x = 5;
+	portals[0].portal.y = 5;
 
-	portals[1].x = 5;
-	portals[1].y = 15;
+	portals[1].type = BLUEPORTAL;
+	portals[1].portal.x = 5;
+	portals[1].portal.y = 15;
 
-	portals[2].x = 15;
-	portals[2].y = 5;
+	portals[2].type = BLUEPORTAL;
+	portals[2].portal.x = 15;
+	portals[2].portal.y = 5;
 
-	portals[3].x = 15;
-	portals[3].y = 15;
+	portals[3].type = REDPORTAL;
+	portals[3].portal.x = 15;
+	portals[3].portal.y = 15;
 }
 
 void Field::drawPortals()
 {
 	for (short i = 0; i < 4; i++)
 	{
-		this->field[portals[i].y][portals[i].x] = PORTAL;
+		this->field[portals[i].portal.y][portals[i].portal.x] = portals[i].type;
 	}
 }
 

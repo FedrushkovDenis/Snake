@@ -3,7 +3,7 @@ Current progress: ||||||||----- 50%
 TODO: 
 1) Winapi Gui (1/4)
 	1) Transfer Logic (Done)
-	2) Draw textures
+	2) Draw textures (1/3)
 	3) Add Sounds
 	4) Create Main Menu
 

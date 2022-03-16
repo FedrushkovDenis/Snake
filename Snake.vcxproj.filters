@@ -31,6 +31,12 @@
     <Filter Include="Файлы ресурсов\BP">
       <UniqueIdentifier>{41a6d6f0-8b64-4a95-95aa-5bccc074f0f8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы ресурсов\Snake">
+      <UniqueIdentifier>{04446523-793a-4211-90df-07481949cf19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы ресурсов\Meal">
+      <UniqueIdentifier>{73c00f4f-a4cd-4066-9487-e18fe0d26135}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stuff.hpp">
@@ -157,6 +163,30 @@
     </Image>
     <Image Include="data\blue portal\BP11.bmp">
       <Filter>Файлы ресурсов\BP</Filter>
+    </Image>
+    <Image Include="data\snake\Snake_tail.bmp">
+      <Filter>Файлы ресурсов\Snake</Filter>
+    </Image>
+    <Image Include="data\snake\Snake_headup.bmp">
+      <Filter>Файлы ресурсов\Snake</Filter>
+    </Image>
+    <Image Include="data\snake\Snake_headleft.bmp">
+      <Filter>Файлы ресурсов\Snake</Filter>
+    </Image>
+    <Image Include="data\snake\Snake_headdown.bmp">
+      <Filter>Файлы ресурсов\Snake</Filter>
+    </Image>
+    <Image Include="data\snake\Snake_headright.bmp">
+      <Filter>Файлы ресурсов\Snake</Filter>
+    </Image>
+    <Image Include="data\banan.bmp">
+      <Filter>Файлы ресурсов\Meal</Filter>
+    </Image>
+    <Image Include="data\grape.bmp">
+      <Filter>Файлы ресурсов\Meal</Filter>
+    </Image>
+    <Image Include="data\apple.bmp">
+      <Filter>Файлы ресурсов\Meal</Filter>
     </Image>
   </ItemGroup>
 </Project>

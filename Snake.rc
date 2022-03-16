@@ -98,6 +98,22 @@ IDB_BITMAP23            BITMAP                  "data\\blue portal\\BP10.bmp"
 
 IDB_BITMAP24            BITMAP                  "data\\blue portal\\BP11.bmp"
 
+IDB_BITMAP25            BITMAP                  "data\\snake\\Snake_tail.bmp"
+
+IDB_BITMAP26            BITMAP                  "data\\snake\\Snake_headup.bmp"
+
+IDB_BITMAP27            BITMAP                  "data\\snake\\Snake_headleft.bmp"
+
+IDB_BITMAP28            BITMAP                  "data\\snake\\Snake_headdown.bmp"
+
+IDB_BITMAP29            BITMAP                  "data\\snake\\Snake_headright.bmp"
+
+IDB_BITMAP30            BITMAP                  "data\\banan.bmp"
+
+IDB_BITMAP31            BITMAP                  "data\\grape.bmp"
+
+IDB_BITMAP32            BITMAP                  "data\\apple.bmp"
+
 #endif    // Русский (Россия) resources
 /////////////////////////////////////////////////////////////////////////////
 

@@ -20,6 +20,7 @@ private:
 	short columns;
 	char** field;
 	Portal portals[PORTALCOUNT];
+	char fruitmass[3];
 	void drawPortals();
 
 	friend Builder; // Обозначение дружественного класса Строителя. (см. далее)
@@ -31,7 +32,6 @@ public:
 	void addFruit(int x, int y);
 	void addPortal(Portal a);
 	void CreatePortals();
-
 
 	void clearField();
 	void printField();
@@ -54,6 +54,7 @@ private:
 	// Важные параметры для двумерного поля - строки и столбцы. Эти поля и копирует Builder.
 	short rows;
 	short columns;
+	char fruitmass[3];
 
 public:
 	// Вызывает setSettings с параметрами конструктора сразу.

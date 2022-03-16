@@ -3,6 +3,10 @@
 #include "..\Game\Game.hpp"
 #include "..\resource.h"
 #include "..\Stuff.hpp"
+#include <wchar.h>
+#include <corecrt_wstdlib.h>
+
+using namespace std;
 
 bool GameWindow::isOpen = false;
 
@@ -24,37 +28,40 @@ void GameWindow::ResourceLoading()
     BM_Grass = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP2), IMAGE_BITMAP, 32, 32, NULL);
 
     // Red Portal resources
-    BM_RedPortal[0] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP3), IMAGE_BITMAP, 32, 32, NULL);
-    BM_RedPortal[1] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP4), IMAGE_BITMAP, 32, 32, NULL);
-    BM_RedPortal[2] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP5), IMAGE_BITMAP, 32, 32, NULL);
-    BM_RedPortal[3] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP6), IMAGE_BITMAP, 32, 32, NULL);
-    BM_RedPortal[4] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP7), IMAGE_BITMAP, 32, 32, NULL);
-    BM_RedPortal[5] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP8), IMAGE_BITMAP, 32, 32, NULL);
-    BM_RedPortal[6] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP9), IMAGE_BITMAP, 32, 32, NULL);
-    BM_RedPortal[7] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP10), IMAGE_BITMAP, 32, 32, NULL);
-    BM_RedPortal[8] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP11), IMAGE_BITMAP, 32, 32, NULL);
-    BM_RedPortal[9] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP12), IMAGE_BITMAP, 32, 32, NULL);
-    BM_RedPortal[10] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP13), IMAGE_BITMAP, 32, 32, NULL);
+    for (int i = 0; i < 11; i++)
+    {
+        BM_RedPortal[i] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP3 + i), IMAGE_BITMAP, 32, 32, NULL);
+    }
 
-    // Blue Portal resources 
+    // Blue Portal resources
+    for (int i = 0; i < 11; i++)
+    {
+        BM_BluePortal[i] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP14 + i), IMAGE_BITMAP, 32, 32, NULL);
+    }
+    BM_snaketail = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP25), IMAGE_BITMAP, 32, 32, NULL);
 
-    BM_BluePortal[0] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP14), IMAGE_BITMAP, 32, 32, NULL);
-    BM_BluePortal[1] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP15), IMAGE_BITMAP, 32, 32, NULL);
-    BM_BluePortal[2] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP16), IMAGE_BITMAP, 32, 32, NULL);
-    BM_BluePortal[3] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP17), IMAGE_BITMAP, 32, 32, NULL);
-    BM_BluePortal[4] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP18), IMAGE_BITMAP, 32, 32, NULL);
-    BM_BluePortal[5] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP19), IMAGE_BITMAP, 32, 32, NULL);
-    BM_BluePortal[6] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP20), IMAGE_BITMAP, 32, 32, NULL);
-    BM_BluePortal[7] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP21), IMAGE_BITMAP, 32, 32, NULL);
-    BM_BluePortal[8] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP22), IMAGE_BITMAP, 32, 32, NULL);
-    BM_BluePortal[9] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP23), IMAGE_BITMAP, 32, 32, NULL);
-    BM_BluePortal[10] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP24), IMAGE_BITMAP, 32, 32, NULL);
+    
+    // Snake head direction sprites
+    // Up
+    BM_snakehead[0] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP26), IMAGE_BITMAP, 32, 32, NULL);
+    // Left
+    BM_snakehead[1] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP27), IMAGE_BITMAP, 32, 32, NULL);
+    // Down
+    BM_snakehead[2] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP28), IMAGE_BITMAP, 32, 32, NULL);
+    // Right
+    BM_snakehead[3] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP29), IMAGE_BITMAP, 32, 32, NULL);
+
+    
+    BM_meal[0] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP30), IMAGE_BITMAP, 32, 32, NULL); // Banan texture
+    BM_meal[1] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP31), IMAGE_BITMAP, 32, 32, NULL); // Grape texture
+    BM_meal[2] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP32), IMAGE_BITMAP, 32, 32, NULL); // Apple texture
 }
 
 void GameWindow::ResourceDestroying()
 {
     DeleteObject(BM_Wall);
     DeleteObject(BM_Grass);
+
     for (short i = 0; i < 11; i++)
     {
         DeleteObject(BM_RedPortal[i]);
@@ -63,6 +70,18 @@ void GameWindow::ResourceDestroying()
     {
         DeleteObject(BM_BluePortal[i]);
     }
+
+    for (int i = 0; i < 3; i++)
+    {
+        DeleteObject(BM_meal[i]);
+    }
+
+    for (int i = 0; i < 4; i++)
+    {
+        DeleteObject(BM_snakehead[i]);
+    }
+
+    DeleteObject(BM_snaketail);
 }
 
 DWORD WINAPI GameWindow::StartWindow(HWND parent)
@@ -98,6 +117,7 @@ DWORD WINAPI GameWindow::StartWindow(HWND parent)
             Game* myGame = Singleton::getGame();
             if (Singleton::getGame()->UserControl('W', 'S', 'A', 'D'))
             {
+                myGame->resetPoints();
                 myGame->snake.Init(3, 8, dirDown);
                 myGame->snake.addTailSegment(3, 4);
                 myGame->snake.addTailSegment(3, 5);
@@ -155,6 +175,13 @@ void GameWindow::Redraw(int x, int y)
     SelectObject(memDC, GetStockObject(DC_PEN));
     SetDCPenColor(memDC, RGB(255, 255, 255));
     Rectangle(memDC, 0, 0, 1920, 1080);
+    
+    // Points render
+    WCHAR buf[20];
+    int result = Singleton::getGame()->getPoints();
+    _itow_s(result, buf, 10);
+    TextOut(memDC, (rctScr->right/5)+20, 15, buf, (result/10)+1);
+
 
     static int BMRP_tickrate = 0; // tickrate to drawing BitMap Red Portal (BMRP)
     static int BMRP_order = 0;    // frame counter for BMBP
@@ -172,9 +199,7 @@ void GameWindow::Redraw(int x, int y)
         curX = x;
         for (short j = 0; j < COLUMNS; j++)
         {
-            if (Singleton::getGame()->field.getCharField()[i][j] == '#' ||
-                Singleton::getGame()->field.getCharField()[i][j] == '+' ||
-                Singleton::getGame()->field.getCharField()[i][j] == Singleton::getGame()->snake.Head)
+            if (Singleton::getGame()->field.getCharField()[i][j] == '#')
                 DrawBitmap(memDC, curX, curY, BM_Wall);
             if (Singleton::getGame()->field.getCharField()[i][j] == REDPORTAL)
             {
@@ -214,8 +239,50 @@ void GameWindow::Redraw(int x, int y)
                     BMBP_times = 0;
                 }
             }
-            if (Singleton::getGame()->field.getCharField()[i][j] == ' ')
+            else if (Singleton::getGame()->field.getCharField()[i][j] == TAIL)
+            {
                 DrawBitmap(memDC, curX, curY, BM_Grass);
+                DrawBitmap(memDC, curX, curY, BM_snaketail);
+            }
+            else if (Singleton::getGame()->field.getCharField()[i][j] == FRUIT1)
+            {
+                DrawBitmap(memDC, curX, curY, BM_Grass);
+                DrawBitmap(memDC, curX, curY, BM_meal[0]);
+            }
+            else if (Singleton::getGame()->field.getCharField()[i][j] == FRUIT2)
+            {
+                DrawBitmap(memDC, curX, curY, BM_Grass);
+                DrawBitmap(memDC, curX, curY, BM_meal[1]);
+            }
+            else if (Singleton::getGame()->field.getCharField()[i][j] == FRUIT3)
+            {
+                DrawBitmap(memDC, curX, curY, BM_Grass);
+                DrawBitmap(memDC, curX, curY, BM_meal[2]);
+            }
+            else if (Singleton::getGame()->field.getCharField()[i][j] == 'A')
+            {
+                DrawBitmap(memDC, curX, curY, BM_Grass);
+                DrawBitmap(memDC, curX, curY, BM_snakehead[0]);
+            }
+            else if (Singleton::getGame()->field.getCharField()[i][j] == '<')
+            {
+                DrawBitmap(memDC, curX, curY, BM_Grass);
+                DrawBitmap(memDC, curX, curY, BM_snakehead[1]);
+            }
+            else if (Singleton::getGame()->field.getCharField()[i][j] == 'V')
+            {
+                DrawBitmap(memDC, curX, curY, BM_Grass);
+                DrawBitmap(memDC, curX, curY, BM_snakehead[2]);
+            }
+            else if (Singleton::getGame()->field.getCharField()[i][j] == '>')
+            {
+                DrawBitmap(memDC, curX, curY, BM_Grass);
+                DrawBitmap(memDC, curX, curY, BM_snakehead[3]);
+            }
+            else if (Singleton::getGame()->field.getCharField()[i][j] == ' ')
+            {
+                DrawBitmap(memDC, curX, curY, BM_Grass);
+            }
             curX += 32;
         }
         curY += 32;
@@ -427,7 +494,6 @@ LRESULT WINAPI MainMenu::wndProcessor(_In_ HWND hWnd, _In_ UINT Msg, _In_ WPARAM
                 Singleton::getGameWindow()->StartWindow(Singleton::getMainMenu()->hwnd);
             }
         }
-        cout << "MainWindow: " << (char)wParam << endl;
     }
     else if (Msg == WM_SIZE)
     {

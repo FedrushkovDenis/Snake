@@ -5,9 +5,6 @@
 #ifdef DEBUG
 
 #pragma comment(linker, "/SUBSYSTEM:CONSOLE")
-#else
-
-//#pragma comment(linker, "/SUBSYSTEM:WINDOWS")
 
 #endif // DEBUG
 
@@ -19,8 +16,6 @@
 #include "Singleton/Singleton.hpp"
 #include "WindowClasses/WindowClass.hpp"
 #include <Windows.h>
-
-#ifdef DEBUG
 
 void gotoxy(int x, int y)
 {
@@ -45,6 +40,8 @@ BOOL ShowConsoleCursor(BOOL bShow)
 		return FALSE;
 	return TRUE;
 }
+
+#ifdef DEBUG
 
 int main()
 {
@@ -83,6 +80,7 @@ int main()
 		gotoxy(0, 0);
 		if (myGame->UserControl('W', 'S', 'A', 'D'))
 		{
+			myGame->resetPoints();
 			myGame->snake.Init(3, 8, dirDown);
 			myGame->snake.addTailSegment(3, 4);
 			myGame->snake.addTailSegment(3, 5);
@@ -129,5 +127,3 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hpi, LPSTR cmdline, int ss)
 }
 
 #endif // DEBUG
-
-

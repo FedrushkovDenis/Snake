@@ -1,8 +1,10 @@
 #include "Field.hpp"
 #include "..\Stuff.hpp"
+#include "..\Singleton\Singleton.hpp"
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>
+
 using namespace std;
 
 Field::Field() {}
@@ -29,7 +31,7 @@ Portal* Field::getPortals()
 
 void Field::addFruit(int x, int y)
 {
-	this->field[y][x] = FRUIT;
+	this->field[y][x] = fruitmass[rand() % 3];
 }
 
 void Field::addPortal(Portal a)
@@ -70,7 +72,7 @@ void Field::clearField()
 	{
 		for (int j = 0; j < this->columns; j++)
 		{
-			if (this->field[i][j] != FRUIT)
+			if (this->field[i][j] != FRUIT1 && this->field[i][j] != FRUIT2 && this->field[i][j] != FRUIT3)
 			{
 				this->field[i][j] = ' ';
 			}
@@ -125,6 +127,9 @@ void Field::printField()
 		cout << this->field[i];
 		cout << endl;
 	}
+	gotoxy(25, 0);
+	cout << Singleton::getGame()->getPoints();
+	gotoxy(0, 0);
 }
 
 Builder::Builder() {}
@@ -138,6 +143,9 @@ void Builder::setSettings(short rows, short columns)
 {
 	this->rows = rows;
 	this->columns = columns;
+	this->fruitmass[0] = FRUIT1;
+	this->fruitmass[1] = FRUIT2;
+	this->fruitmass[2] = FRUIT3;
 }
 
 void Builder::buildbyReference(Field* newfield)
@@ -150,6 +158,10 @@ void Builder::buildbyReference(Field* newfield)
 	{
 		newfield->field[i] = new char[newfield->columns+1];
 	}
+
+	newfield->fruitmass[0] = this->fruitmass[0]; // Настройка логических обьектов еды
+	newfield->fruitmass[1] = this->fruitmass[1];
+	newfield->fruitmass[2] = this->fruitmass[2];
 
 	int i = 0;
 	int j = 0;

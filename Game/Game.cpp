@@ -3,12 +3,19 @@
 #include <Windows.h>
 #include "..\Stuff.hpp"
 
-Game::~Game() 
-{
-	//field.~Field();
-}
+Game::~Game() {}
 
 Game::Game()
+{
+	points = 0;
+}
+
+int Game::getPoints()
+{
+	return points;
+}
+
+void Game::resetPoints()
 {
 	points = 0;
 }
@@ -70,8 +77,9 @@ int Game::UserControl(char w, char s, char a, char d)
 		snakeTeleport(field.getPortals()[abs(place - 3)].portal.x, field.getPortals()[abs(place - 3)].portal.y);
 	}
 
-	if (field.getCharField()[snake.y][snake.x] == FRUIT)
+	if (field.getCharField()[snake.y][snake.x] == FRUIT1 || field.getCharField()[snake.y][snake.x] == FRUIT2 || field.getCharField()[snake.y][snake.x] == FRUIT3)
 	{
+		this->points++;
 		snake.addTailSegment(oldPoint.x, oldPoint.y);
 		while (1)
 		{
@@ -79,10 +87,11 @@ int Game::UserControl(char w, char s, char a, char d)
 			short x = rand() % COLUMNS;
 			short y = rand() % ROWS;
 			if (x != 0 && x != (field.getColumns() - 1) && y != 0 && y != (field.getRows() - 1) &&
-				ptrField[y][x] != '#' && ptrField[y][x] != '|' &&
-				ptrField[y][x] != '-' && ptrField[y][x] != 'V' &&
+				ptrField[y][x] != '#' && ptrField[y][x] != TAIL && ptrField[y][x] != 'V' &&
 				ptrField[y][x] != 'A' && ptrField[y][x] != '<' &&
-				ptrField[y][x] != '>' && ptrField[y][x] != REDPORTAL && ptrField[y][x] != BLUEPORTAL)
+				ptrField[y][x] != '>' && ptrField[y][x] != REDPORTAL &&
+				ptrField[y][x] != BLUEPORTAL && ptrField[y][x] != FRUIT1 &&
+				ptrField[y][x] != FRUIT2 && ptrField[y][x] != FRUIT3)
 			{
 				field.addFruit(x, y);
 				break;
@@ -94,7 +103,7 @@ int Game::UserControl(char w, char s, char a, char d)
 
 	if ((snake.x <= 0) || (snake.x >= field.getColumns()-1) ||
 		(snake.y <= 0) || (snake.y >= field.getRows()-1)	||
-		field.getCharField()[snake.y][snake.x] == TAIL /*|| field.getCharField()[snake.y][snake.x] == '-'*/)
+		field.getCharField()[snake.y][snake.x] == TAIL)
 		return 1;
 	return 0;
 }

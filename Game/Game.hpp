@@ -18,6 +18,8 @@ public:
 	Field field;
 
 	int UserControl(char w, char s, char a, char d);
+	int getPoints();
+	void resetPoints();
 
 	Game();
 	~Game();

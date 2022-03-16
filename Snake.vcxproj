@@ -162,6 +162,8 @@
     <ResourceCompile Include="Snake.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="data\apple.bmp" />
+    <Image Include="data\banan.bmp" />
     <Image Include="data\blue portal\BP1.bmp" />
     <Image Include="data\blue portal\BP10.bmp" />
     <Image Include="data\blue portal\BP11.bmp" />
@@ -173,6 +175,7 @@
     <Image Include="data\blue portal\BP7.bmp" />
     <Image Include="data\blue portal\BP8.bmp" />
     <Image Include="data\blue portal\BP9.bmp" />
+    <Image Include="data\grape.bmp" />
     <Image Include="data\grass.bmp" />
     <Image Include="data\red portal\RP1.bmp" />
     <Image Include="data\red portal\RP10.bmp" />
@@ -185,6 +188,11 @@
     <Image Include="data\red portal\RP7.bmp" />
     <Image Include="data\red portal\RP8.bmp" />
     <Image Include="data\red portal\RP9.bmp" />
+    <Image Include="data\snake\Snake_headdown.bmp" />
+    <Image Include="data\snake\Snake_headleft.bmp" />
+    <Image Include="data\snake\Snake_headright.bmp" />
+    <Image Include="data\snake\Snake_headup.bmp" />
+    <Image Include="data\snake\Snake_tail.bmp" />
     <Image Include="data\wall.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

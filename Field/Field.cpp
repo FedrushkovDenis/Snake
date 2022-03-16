@@ -159,7 +159,7 @@ void Builder::buildbyReference(Field* newfield)
 		newfield->field[i] = new char[newfield->columns+1];
 	}
 
-	newfield->fruitmass[0] = this->fruitmass[0]; // Íàñòğîéêà ëîãè÷åñêèõ îáüåêòîâ åäû
+	newfield->fruitmass[0] = this->fruitmass[0]; // ĞĞ°ÑÑ‚Ñ€Ğ¾Ğ¹ĞºĞ° Ğ»Ğ¾Ğ³Ğ¸Ñ‡ĞµÑĞºĞ¸Ñ… Ğ¾Ğ±ÑŠĞµĞºÑ‚Ğ¾Ğ² ĞµĞ´Ñ‹
 	newfield->fruitmass[1] = this->fruitmass[1];
 	newfield->fruitmass[2] = this->fruitmass[2];
 

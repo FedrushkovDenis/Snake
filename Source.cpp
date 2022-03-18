@@ -26,6 +26,17 @@ void gotoxy(int x, int y)
 	SetConsoleCursorPosition(h, c);
 }
 
+int _cdecl CountOfDigits(int a)
+{
+	int count = 1;
+	while (a != 0)
+	{
+		count += 1;
+		a = a / 10;
+	}
+	return count;
+}
+
 BOOL ShowConsoleCursor(BOOL bShow)
 {
 	CONSOLE_CURSOR_INFO cci;
@@ -50,7 +61,7 @@ int main()
 
 	Singleton::createGame();
 	Game* myGame = Singleton::getGame();
-	Builder myBuilder(ROWS, COLUMNS);
+	Builder myBuilder(ROWS, COLUMNS, FSTYLE_SQUARE | FSTYLE_HDASH);
 
 	myBuilder.buildbyReference(&Singleton::getGame()->field);
 
@@ -69,9 +80,9 @@ int main()
 		myGame->field.addPortal(myGame->field.getPortals()[i]);
 	}
 
-	myGame->field.addFruit(10, 10);
-	myGame->field.addFruit(12, 12);
-	myGame->field.addFruit(14, 14);
+	myGame->field.addFruit(6, 10);
+	myGame->field.addFruit(10, 6);
+	myGame->field.addFruit(18, 18);
 
 	myGame->snake.drawOnMap();
 	myGame->field.printField();
@@ -111,7 +122,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hpi, LPSTR cmdline, int ss)
 	Singleton::createGameWindow();
 
 	Game* myGame = Singleton::getGame();
-	Builder myBuilder(ROWS, COLUMNS);
+	Builder myBuilder(ROWS, COLUMNS, FSTYLE_SQUARE | FSTYLE_HDASH);
 
 	myBuilder.buildbyReference(&Singleton::getGame()->field);
 

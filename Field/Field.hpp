@@ -1,6 +1,16 @@
 #ifndef _FIELD
 #define _FIELD
 
+// Стили двумерного поля 
+#define FSTYLE_NONE					0x000		// Отсутствие стиля поля.
+#define FSTYLE_SQUARE				0x001		// Стена из квадратов по краям.
+#define FSTYLE_VDASH				0x002		// Вертикальная черта по центру поля.
+#define FSTYLE_HDASH				0x004		// Горизонтальная черта по центру поля.
+#define FSTYLE_SLASH				0x008		// Косая черта из левого нижнего до правого верхнего угла.
+#define FSTYLE_BACKSLASH			0x010		// Обратная косая черта из левого верхнего до правого нижнего угла.
+#define FSTYLE_CROSS	(FSTYLE_SLASH | FSTYLE_BACKSLASH)
+#define FSTYLE_PLUS		(FSTYLE_VDASH | FSTYLE_HDASH)
+
 #include <Windows.h>
 #include "..\Stuff.hpp"
 
@@ -55,14 +65,17 @@ private:
 	short rows;
 	short columns;
 	char fruitmass[3];
+	short style;
 
 public:
-	// Вызывает setSettings с параметрами конструктора сразу.
-	Builder(short rows, short columns);
+	// Вызывает все методы-сеттеры с параметрами конструктора сразу.
+	Builder(short rows, short columns, short style);
 	Builder();
 
-	// Настраивает параметры строителя.
-	void setSettings(short rows, short columns);
+	// Устанавливает размеры
+	void setSize(short rows, short columns);
+	// Устанавливает стиль.
+	void setStyle(short style);
 
 	// Здесь реализованы две версии работы строителя вследствие различных подходов к самой архитектуре.
 	// По своей логике оба строителя абсолютно одинаковы.
@@ -79,8 +92,6 @@ public:
 
 	// Настраивает экземпляр класса Field по ссылке.
 	void buildbyReference(Field* newfield);
-	// Строит экземпляр класса Field возвращая его.
-	Field buildByCreation();
 };
 
 #endif // !_FIELD

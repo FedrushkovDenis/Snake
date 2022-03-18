@@ -11,9 +11,10 @@
 
 #define PORTALCOUNT 4
 
-#define ROWS 20
-#define COLUMNS 20
+#define ROWS 23
+#define COLUMNS 23
 
 void gotoxy(int x, int y);
+int _cdecl CountOfDigits(int a);
 
 #endif // !_STUFF

@@ -16,4 +16,4 @@ TODO:
 TODO (Optional):
 1) Map Editor
 2) HP mechanichs
-3) Upgrade OOP pattern usages
+3) Upgrade OOP pattern usages (Done)

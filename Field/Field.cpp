@@ -47,15 +47,15 @@ void Field::CreatePortals()
 
 	portals[1].type = BLUEPORTAL;
 	portals[1].portal.x = 5;
-	portals[1].portal.y = 15;
+	portals[1].portal.y = COLUMNS - 6;
 
 	portals[2].type = BLUEPORTAL;
-	portals[2].portal.x = 15;
+	portals[2].portal.x = ROWS - 6;
 	portals[2].portal.y = 5;
 
 	portals[3].type = REDPORTAL;
-	portals[3].portal.x = 15;
-	portals[3].portal.y = 15;
+	portals[3].portal.x = ROWS - 6;
+	portals[3].portal.y = COLUMNS - 6;
 }
 
 void Field::drawPortals()
@@ -72,13 +72,9 @@ void Field::clearField()
 	{
 		for (int j = 0; j < this->columns; j++)
 		{
-			if (this->field[i][j] != FRUIT1 && this->field[i][j] != FRUIT2 && this->field[i][j] != FRUIT3)
+			if (this->field[i][j] != FRUIT1 && this->field[i][j] != FRUIT2 && this->field[i][j] != FRUIT3 && this->field[i][j] != '#')
 			{
 				this->field[i][j] = ' ';
-			}
-			if (i == 0 || j == 0 || i == (this->rows - 1) || j == (this->columns - 1))
-			{
-				this->field[i][j] = '#';
 			}
 
 			this->drawPortals();
@@ -127,25 +123,38 @@ void Field::printField()
 		cout << this->field[i];
 		cout << endl;
 	}
-	gotoxy(25, 0);
+	gotoxy(COLUMNS + 3, 0);
 	cout << Singleton::getGame()->getPoints();
 	gotoxy(0, 0);
 }
 
+
+
+
+
+
+
 Builder::Builder() {}
 
-Builder::Builder(short rows, short columns)
+Builder::Builder(short rows, short columns, short style)
 {
-	this->setSettings(rows, columns);
+	this->setSize(rows, columns);
+	this->setStyle(style);
 }
 
-void Builder::setSettings(short rows, short columns)
+void Builder::setSize(short rows, short columns)
 {
 	this->rows = rows;
 	this->columns = columns;
+
 	this->fruitmass[0] = FRUIT1;
 	this->fruitmass[1] = FRUIT2;
 	this->fruitmass[2] = FRUIT3;
+}
+
+void Builder::setStyle(short style)
+{
+	this->style = style;
 }
 
 void Builder::buildbyReference(Field* newfield)
@@ -171,32 +180,77 @@ void Builder::buildbyReference(Field* newfield)
 		for (j = 0; j < newfield->columns; j++)
 		{
 			newfield->field[i][j] = ' ';
-			if (i == 0 || j == 0 || i == (newfield->rows - 1) || j == (newfield->columns - 1))
-				newfield->field[i][j] = '#';
 		}
 		newfield->field[i][j] = '\0';
 	}
 
-}
-
-Field Builder::buildByCreation()
-{
-	Field newfield;
-	newfield.rows = this->rows;
-	newfield.columns = this->columns;
-	newfield.field = new char* [this->rows];
-	for (int i = 0; i < this->rows; i++)
+	if (style & FSTYLE_SQUARE)
 	{
-		newfield.field[i] = new char[this->columns];
-	}
-	for (int i = 0; i < this->rows; i++)
-	{
-		for (int j = 0; j < this->columns; j++)
+		int i = 0;
+		int j = 0;
+		for (i = 0; i < newfield->rows; i++)
 		{
-			newfield.field[i][j] = ' ';
-			if (i == 0 || j == 0 || i == (this->rows - 1) || j == (this->columns - 1))
-				newfield.field[i][j] = '#';
+			for (j = 0; j < newfield->columns; j++)
+			{
+				if (i == 0 || j == 0 || i == (newfield->rows - 1) || j == (newfield->columns - 1))
+					newfield->field[i][j] = '#';
+			}
 		}
 	}
-	return newfield;
+
+	if (style & FSTYLE_HDASH)
+	{
+		int i = 0;
+		int j = 0;
+		for (i = 0; i < newfield->rows; i++)
+		{
+			for (j = 0; j < newfield->columns; j++)
+			{
+				if (i == newfield->rows / 2)
+					newfield->field[i][j] = '#';
+			}
+		}
+	}
+
+	if (style & FSTYLE_VDASH)
+	{
+		int i = 0;
+		int j = 0;
+		for (i = 0; i < newfield->rows; i++)
+		{
+			for (j = 0; j < newfield->columns; j++)
+			{
+				if (j == newfield->rows / 2)
+					newfield->field[i][j] = '#';
+			}
+		}
+	}
+
+	if (style & FSTYLE_BACKSLASH)
+	{
+		int i = 0;
+		int j = 0;
+		for (i = 0; i < newfield->rows; i++)
+		{
+			for (j = 0; j < newfield->columns; j++)
+			{
+				if (i == j)
+					newfield->field[i][j] = '#';
+			}
+		}
+	}
+
+	if (style & FSTYLE_SLASH)
+	{
+		int i = 0;
+		int j = 0;
+		for (i = 0; i < newfield->rows; i++)
+		{
+			for (j = 0; j < newfield->columns; j++)
+			{
+				if (i == (COLUMNS - j - 1))
+					newfield->field[i][j] = '#';
+			}
+		}
+	}
 }

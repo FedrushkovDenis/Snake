@@ -27,13 +27,13 @@ void GameWindow::ResourceLoading()
     BM_Wall = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP1), IMAGE_BITMAP, 32, 32, NULL);
     BM_Grass = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP2), IMAGE_BITMAP, 32, 32, NULL);
 
-    // Red Portal resources
+    // Red Portal sprites resources
     for (int i = 0; i < 11; i++)
     {
         BM_RedPortal[i] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP3 + i), IMAGE_BITMAP, 32, 32, NULL);
     }
 
-    // Blue Portal resources
+    // Blue Portal sprites resources
     for (int i = 0; i < 11; i++)
     {
         BM_BluePortal[i] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP14 + i), IMAGE_BITMAP, 32, 32, NULL);
@@ -92,8 +92,11 @@ DWORD WINAPI GameWindow::StartWindow(HWND parent)
 
     hwnd = CreateWindow(wndclass.lpszClassName, L"My Game Window",
         WS_OVERLAPPEDWINDOW | WS_VISIBLE,
-        (rctScr->right / 2) - 400, (rctScr->bottom / 4 - 200), 800, 800,
+        (rctScr->right / 2) - 450, (rctScr->bottom / 4 - 220), 820, 830,
         parent, NULL, NULL, NULL);
+
+    rctClient = (LPRECT)malloc(sizeof(*rctClient));
+    GetClientRect(hwnd, rctClient);
 
     ResourceLoading();
 
@@ -132,6 +135,7 @@ DWORD WINAPI GameWindow::StartWindow(HWND parent)
         }
     }
     free(rctScr);
+    free(rctClient);
     ResourceDestroying();
     GameWindow::isOpen = false;
     ShowWindow(Singleton::getMainMenu()->getHWND(), SW_SHOW);
@@ -180,7 +184,7 @@ void GameWindow::Redraw(int x, int y)
     WCHAR buf[20];
     int result = Singleton::getGame()->getPoints();
     _itow_s(result, buf, 10);
-    TextOut(memDC, (rctScr->right/5)+20, 15, buf, (result/10)+1);
+    TextOut(memDC, (rctClient->right - rctClient->left) / 2, 15, buf, CountOfDigits(result));
 
 
     static int BMRP_tickrate = 0; // tickrate to drawing BitMap Red Portal (BMRP)

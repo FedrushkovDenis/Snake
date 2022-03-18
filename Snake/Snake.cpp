@@ -63,37 +63,5 @@ void Snake::drawOnMap()
 	for (int i = 0; i < len; i++)
 	{
 		map[tail[i].y][tail[i].x] = TAIL;
-		/*if (dir == dirRight || dir == dirLeft)
-			map[tail[i].y][tail[i].x] = '-';
-		else
-			map[tail[i].y][tail[i].x] = '|';*/
 	}
 }
-
-//void Snake::drawOnMap()
-//{
-//	if (dir == dirRight)
-//	{
-//		map[y][x] = HEAD;
-//	}
-//	else if (dir == dirLeft)
-//	{
-//		map[y][x] = HEAD;
-//	}
-//	else if (dir == dirDown)
-//	{
-//		map[y][x] = HEAD;
-//	}
-//	else if (dir == dirUp)
-//	{
-//		map[y][x] = HEAD;
-//	}
-//
-//	for (int i = 0; i < len; i++)
-//	{
-//		if (dir == dirRight || dir == dirLeft)
-//			map[tail[i].y][tail[i].x] = TAIL;
-//		else
-//			map[tail[i].y][tail[i].x] = TAIL;
-//	}
-//}

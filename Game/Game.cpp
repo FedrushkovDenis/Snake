@@ -103,7 +103,8 @@ int Game::UserControl(char w, char s, char a, char d)
 
 	if ((snake.x <= 0) || (snake.x >= field.getColumns()-1) ||
 		(snake.y <= 0) || (snake.y >= field.getRows()-1)	||
-		field.getCharField()[snake.y][snake.x] == TAIL)
+		field.getCharField()[snake.y][snake.x] == TAIL		||
+		field.getCharField()[snake.y][snake.x] == '#')
 		return 1;
 	return 0;
 }

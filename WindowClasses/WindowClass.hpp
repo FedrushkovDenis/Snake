@@ -44,6 +44,7 @@ private:
     WNDCLASS WINAPI ClassRegister(LPCWSTR classname, WNDPROC wndproc);
 public:
     LPRECT rctScr;
+    LPRECT rctClient;
     static bool isOpen;
     HBITMAP BM_Grass;
     HBITMAP BM_Wall;

@@ -2,7 +2,7 @@
 #define _FIELD
 
 // Стили двумерного поля 
-#define FSTYLE_NONE					0x000		// Отсутствие стиля поля.
+#define FSTYLE_NONE 				0x000		// Отсутствие стиля поля.
 #define FSTYLE_SQUARE				0x001		// Стена из квадратов по краям.
 #define FSTYLE_VDASH				0x002		// Вертикальная черта по центру поля.
 #define FSTYLE_HDASH				0x004		// Горизонтальная черта по центру поля.

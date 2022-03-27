@@ -8,8 +8,8 @@
 #define FSTYLE_HDASH				0x004		// Горизонтальная черта по центру поля.
 #define FSTYLE_SLASH				0x008		// Косая черта из левого нижнего до правого верхнего угла.
 #define FSTYLE_BACKSLASH			0x010		// Обратная косая черта из левого верхнего до правого нижнего угла.
-#define FSTYLE_CROSS	(FSTYLE_SLASH | FSTYLE_BACKSLASH)
-#define FSTYLE_PLUS		(FSTYLE_VDASH | FSTYLE_HDASH)
+#define FSTYLE_CROSS		(FSTYLE_SLASH | FSTYLE_BACKSLASH)
+#define FSTYLE_PLUS 		(FSTYLE_VDASH | FSTYLE_HDASH)
 
 #include <Windows.h>
 #include "..\Stuff.hpp"

@@ -46,14 +46,17 @@ public:
     LPRECT rctScr;
     LPRECT rctClient;
     static bool isOpen;
+    static bool start;
+
     HBITMAP BM_Grass;
     HBITMAP BM_Wall;
-
     HBITMAP BM_RedPortal[11];
     HBITMAP BM_BluePortal[11];
     HBITMAP BM_snaketail;
     HBITMAP BM_snakehead[4];
     HBITMAP BM_meal[3];
+
+    HFONT myFont;
 
     GameWindow();
 

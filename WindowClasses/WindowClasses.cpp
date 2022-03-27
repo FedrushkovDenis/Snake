@@ -5,10 +5,13 @@
 #include "..\Stuff.hpp"
 #include <wchar.h>
 #include <corecrt_wstdlib.h>
+#include <Windows.h>
+#include <conio.h>
 
 using namespace std;
 
 bool GameWindow::isOpen = false;
+bool GameWindow::start = false;
 
 GameWindow::GameWindow() {}
 
@@ -55,10 +58,16 @@ void GameWindow::ResourceLoading()
     BM_meal[0] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP30), IMAGE_BITMAP, 32, 32, NULL); // Banan texture
     BM_meal[1] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP31), IMAGE_BITMAP, 32, 32, NULL); // Grape texture
     BM_meal[2] = (HBITMAP)LoadImage(Singleton::hInst, MAKEINTRESOURCE(IDB_BITMAP32), IMAGE_BITMAP, 32, 32, NULL); // Apple texture
+
+    myFont = CreateFont(0, 13, 0, 0, FW_BOLD,
+        FALSE, FALSE, FALSE, RUSSIAN_CHARSET | DEFAULT_CHARSET,
+        OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
+        PROOF_QUALITY, DEFAULT_PITCH, NULL);
 }
 
 void GameWindow::ResourceDestroying()
 {
+    DeleteObject(myFont);
     DeleteObject(BM_Wall);
     DeleteObject(BM_Grass);
 
@@ -87,25 +96,34 @@ void GameWindow::ResourceDestroying()
 DWORD WINAPI GameWindow::StartWindow(HWND parent)
 {
     GameWindow::isOpen = true;
-    rctScr = (LPRECT)malloc(sizeof(*rctScr));
+    GameWindow::start = false;
+
+    // Not a Cpp variant to allocate memory. 
+    //rctScr = (LPRECT)malloc(sizeof(*rctScr));
+    //GetClientRect(GetDesktopWindow(), rctScr);
+
+    rctScr = new RECT;
     GetClientRect(GetDesktopWindow(), rctScr);
 
     hwnd = CreateWindow(wndclass.lpszClassName, L"My Game Window",
         WS_OVERLAPPEDWINDOW | WS_VISIBLE,
         (rctScr->right / 2) - 450, (rctScr->bottom / 4 - 220), 820, 830,
         parent, NULL, NULL, NULL);
-
-    rctClient = (LPRECT)malloc(sizeof(*rctClient));
+    
+    rctClient = new RECT;
     GetClientRect(hwnd, rctClient);
 
     ResourceLoading();
 
     windowDC = GetDC(hwnd);
 
-    Redraw(32, 32);
     StartGame();
 
+    Redraw(32, 32);
+
     MSG msg;
+    SelectObject(windowDC, myFont);
+    TextOut(windowDC, (rctClient->right - rctClient->left) / 3, 5, L"Press any key to start", 23);
 
     while (1)
     {
@@ -117,27 +135,46 @@ DWORD WINAPI GameWindow::StartWindow(HWND parent)
         }
         else
         {
-            Game* myGame = Singleton::getGame();
-            if (Singleton::getGame()->UserControl('W', 'S', 'A', 'D'))
+            if (GameWindow::start)
             {
-                myGame->resetPoints();
-                myGame->snake.Init(3, 8, dirDown);
-                myGame->snake.addTailSegment(3, 4);
-                myGame->snake.addTailSegment(3, 5);
-                myGame->snake.addTailSegment(3, 6);
-                myGame->snake.addTailSegment(3, 7);
-            }
-            myGame->field.clearField();
+                Game* myGame = Singleton::getGame();
+                if (Singleton::getGame()->UserControl('W', 'S', 'A', 'D'))
+                {
+                    myGame->resetPoints();
+                    myGame->snake.Init(3, 8, dirDown);
+                    myGame->snake.addTailSegment(3, 4);
+                    myGame->snake.addTailSegment(3, 5);
+                    myGame->snake.addTailSegment(3, 6);
+                    myGame->snake.addTailSegment(3, 7);
 
-            myGame->snake.drawOnMap();
-            Singleton::getGameWindow()->Redraw(32, 32);
-            Sleep(100);
+                    myGame->field.clearField();
+
+                    myGame->snake.drawOnMap();
+                    Singleton::getGameWindow()->Redraw(32, 32);
+
+                    // Probably exist better version of pause menu then this :/
+                    GameWindow::start = false;
+                    TextOut(windowDC, (rctClient->right - rctClient->left) / 3, 5, L"Press any key to start", 23);
+                    continue;
+                }
+                myGame->field.clearField();
+
+                myGame->snake.drawOnMap();
+                Singleton::getGameWindow()->Redraw(32, 32);
+                Sleep(100);
+            }
+            else Sleep(100);
         }
     }
-    free(rctScr);
-    free(rctClient);
+
+    delete rctClient;
+    delete rctScr;
+
     ResourceDestroying();
+    Singleton::getGame()->field.clearField();
+
     GameWindow::isOpen = false;
+    GameWindow::start = false;
     ShowWindow(Singleton::getMainMenu()->getHWND(), SW_SHOW);
     return 0;
 }
@@ -180,12 +217,13 @@ void GameWindow::Redraw(int x, int y)
     SetDCPenColor(memDC, RGB(255, 255, 255));
     Rectangle(memDC, 0, 0, 1920, 1080);
     
+
     // Points render
     WCHAR buf[20];
     int result = Singleton::getGame()->getPoints();
     _itow_s(result, buf, 10);
-    TextOut(memDC, (rctClient->right - rctClient->left) / 2, 15, buf, CountOfDigits(result));
-
+    SelectObject(memDC, myFont);
+    TextOut(memDC, (rctClient->right - rctClient->left) / 2, 10, buf, CountOfDigits(result));
 
     static int BMRP_tickrate = 0; // tickrate to drawing BitMap Red Portal (BMRP)
     static int BMRP_order = 0;    // frame counter for BMBP
@@ -198,14 +236,16 @@ void GameWindow::Redraw(int x, int y)
     int curX = x;
     int curY = y;
 
+    char** field = Singleton::getGame()->field.getCharField();
+
     for (short i = 0; i < ROWS; i++)
     {
         curX = x;
         for (short j = 0; j < COLUMNS; j++)
         {
-            if (Singleton::getGame()->field.getCharField()[i][j] == '#')
+            if (field[i][j] == '#')
                 DrawBitmap(memDC, curX, curY, BM_Wall);
-            if (Singleton::getGame()->field.getCharField()[i][j] == REDPORTAL)
+            if (field[i][j] == REDPORTAL)
             {
                 DrawBitmap(memDC, curX, curY, BM_RedPortal[0]);
                 if (BMRP_tickrate >= 30)
@@ -224,7 +264,7 @@ void GameWindow::Redraw(int x, int y)
                     BMRP_times = 0;
                 }
             }
-            else if (Singleton::getGame()->field.getCharField()[i][j] == BLUEPORTAL)
+            else if (field[i][j] == BLUEPORTAL)
             {
                 DrawBitmap(memDC, curX, curY, BM_BluePortal[0]);
                 if (BMBP_tickrate >= 45)
@@ -243,47 +283,47 @@ void GameWindow::Redraw(int x, int y)
                     BMBP_times = 0;
                 }
             }
-            else if (Singleton::getGame()->field.getCharField()[i][j] == TAIL)
+            else if (field[i][j] == TAIL)
             {
                 DrawBitmap(memDC, curX, curY, BM_Grass);
                 DrawBitmap(memDC, curX, curY, BM_snaketail);
             }
-            else if (Singleton::getGame()->field.getCharField()[i][j] == FRUIT1)
+            else if (field[i][j] == FRUIT1)
             {
                 DrawBitmap(memDC, curX, curY, BM_Grass);
                 DrawBitmap(memDC, curX, curY, BM_meal[0]);
             }
-            else if (Singleton::getGame()->field.getCharField()[i][j] == FRUIT2)
+            else if (field[i][j] == FRUIT2)
             {
                 DrawBitmap(memDC, curX, curY, BM_Grass);
                 DrawBitmap(memDC, curX, curY, BM_meal[1]);
             }
-            else if (Singleton::getGame()->field.getCharField()[i][j] == FRUIT3)
+            else if (field[i][j] == FRUIT3)
             {
                 DrawBitmap(memDC, curX, curY, BM_Grass);
                 DrawBitmap(memDC, curX, curY, BM_meal[2]);
             }
-            else if (Singleton::getGame()->field.getCharField()[i][j] == 'A')
+            else if (field[i][j] == 'A')
             {
                 DrawBitmap(memDC, curX, curY, BM_Grass);
                 DrawBitmap(memDC, curX, curY, BM_snakehead[0]);
             }
-            else if (Singleton::getGame()->field.getCharField()[i][j] == '<')
+            else if (field[i][j] == '<')
             {
                 DrawBitmap(memDC, curX, curY, BM_Grass);
                 DrawBitmap(memDC, curX, curY, BM_snakehead[1]);
             }
-            else if (Singleton::getGame()->field.getCharField()[i][j] == 'V')
+            else if (field[i][j] == 'V')
             {
                 DrawBitmap(memDC, curX, curY, BM_Grass);
                 DrawBitmap(memDC, curX, curY, BM_snakehead[2]);
             }
-            else if (Singleton::getGame()->field.getCharField()[i][j] == '>')
+            else if (field[i][j] == '>')
             {
                 DrawBitmap(memDC, curX, curY, BM_Grass);
                 DrawBitmap(memDC, curX, curY, BM_snakehead[3]);
             }
-            else if (Singleton::getGame()->field.getCharField()[i][j] == ' ')
+            else if (field[i][j] == ' ')
             {
                 DrawBitmap(memDC, curX, curY, BM_Grass);
             }
@@ -326,24 +366,29 @@ LRESULT WINAPI GameWindow::wndProcessor(_In_ HWND hWnd, _In_ UINT Msg, _In_ WPAR
     }
     else if (Msg == WM_CHAR)
     {
-        if (wParam == VK_ESCAPE)
+        GameWindow::start = true;
+        if (GameWindow::start)
         {
-            DestroyWindow(Singleton::getGameWindow()->getHWND());
-        }
-        Game* myGame = Singleton::getGame();
-        if (Singleton::getGame()->UserControl('W', 'S', 'A', 'D'))
-        {
-            myGame->snake.Init(3, 8, dirDown);
-            myGame->snake.addTailSegment(3, 4);
-            myGame->snake.addTailSegment(3, 5);
-            myGame->snake.addTailSegment(3, 6);
-            myGame->snake.addTailSegment(3, 7);
-        }
-        myGame->field.clearField();
+            if (wParam == VK_ESCAPE)
+            {
+                DestroyWindow(Singleton::getGameWindow()->getHWND());
+            }
+            Game* myGame = Singleton::getGame();
+            if (Singleton::getGame()->UserControl('W', 'S', 'A', 'D'))
+            {
+                myGame->snake.Init(3, 8, dirDown);
+                myGame->snake.addTailSegment(3, 4);
+                myGame->snake.addTailSegment(3, 5);
+                myGame->snake.addTailSegment(3, 6);
+                myGame->snake.addTailSegment(3, 7);
+            }
+            myGame->field.clearField();
 
-        myGame->snake.drawOnMap();
-        Singleton::getGameWindow()->Redraw(32, 32);
-        Sleep(100);
+            myGame->snake.drawOnMap();
+            Singleton::getGameWindow()->Redraw(32, 32);
+            Sleep(100);
+        }
+        else Sleep(100);
     }
     else if (Msg == WM_SIZE)
     {
@@ -407,8 +452,7 @@ void GameWindow::DrawBitmap(HDC hDC, int x, int y, HBITMAP hBitmap)
         // для контекста памяти
         DPtoLP(hMemDC, &ptOrg, 1);
 
-        //BitBlt(hDC, x, y, ptSize.x, ptSize.y, hMemDC, ptOrg.x, ptOrg.y, SRCCOPY);
-
+        // Отрисовка bmp с игнорированием цвета.
         GdiTransparentBlt(hDC, x, y, ptSize.x, ptSize.y, hMemDC, 0, 0, ptSize.x, ptSize.y, RGB(255, 255, 255));
 
         // Восстанавливаем контекст памяти

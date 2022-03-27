@@ -114,6 +114,24 @@ IDB_BITMAP31            BITMAP                  "data\\grape.bmp"
 
 IDB_BITMAP32            BITMAP                  "data\\apple.bmp"
 
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// WAVE
+//
+
+IDR_WAVE1               WAVE                    "data\\sounds\\PortalSound.wav"
+
+IDR_WAVE2               WAVE                    "data\\sounds\\Pickup1.wav"
+
+IDR_WAVE3               WAVE                    "data\\sounds\\Pickup2.wav"
+
+IDR_WAVE4               WAVE                    "data\\sounds\\Pickup3.wav"
+
+IDR_WAVE5               WAVE                    "data\\sounds\\Pickup4.wav"
+
+IDR_WAVE6               WAVE                    "data\\sounds\\Death.wav"
+
 #endif    // Русский (Россия) resources
 /////////////////////////////////////////////////////////////////////////////
 

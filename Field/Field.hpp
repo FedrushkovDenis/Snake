@@ -43,6 +43,7 @@ public:
 	void addPortal(Portal a);
 	void CreatePortals();
 
+	void updateField();
 	void clearField();
 	void printField();
 

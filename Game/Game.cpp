@@ -2,6 +2,7 @@
 #include "..\Field\Field.hpp"
 #include <Windows.h>
 #include "..\Stuff.hpp"
+#include "..\resource.h"
 
 Game::~Game() {}
 
@@ -52,6 +53,7 @@ int Game::UserControl(char w, char s, char a, char d)
 
 	if (field.getCharField()[snake.y][snake.x] == REDPORTAL)
 	{
+		PlaySound(MAKEINTRESOURCE(IDR_WAVE1), NULL, SND_RESOURCE | SND_ASYNC);
 		int place = 0;
 		for (int i = 0; i < PORTALCOUNT; i++)
 		{
@@ -65,6 +67,7 @@ int Game::UserControl(char w, char s, char a, char d)
 	}
 	else if (field.getCharField()[snake.y][snake.x] == BLUEPORTAL)
 	{
+		PlaySound(MAKEINTRESOURCE(IDR_WAVE1), NULL, SND_RESOURCE | SND_ASYNC);
 		int place = 0;
 		for (int i = 0; i < PORTALCOUNT; i++)
 		{
@@ -79,6 +82,7 @@ int Game::UserControl(char w, char s, char a, char d)
 
 	if (field.getCharField()[snake.y][snake.x] == FRUIT1 || field.getCharField()[snake.y][snake.x] == FRUIT2 || field.getCharField()[snake.y][snake.x] == FRUIT3)
 	{
+		PlaySound(MAKEINTRESOURCE(IDR_WAVE2 + (rand() % 4)), NULL, SND_RESOURCE | SND_ASYNC);
 		this->points++;
 		snake.addTailSegment(oldPoint.x, oldPoint.y);
 		while (1)
@@ -101,10 +105,13 @@ int Game::UserControl(char w, char s, char a, char d)
 	}
 	else snake.MoveTail(oldPoint.x, oldPoint.y);
 
-	if ((snake.x <= 0) || (snake.x >= field.getColumns()-1) ||
-		(snake.y <= 0) || (snake.y >= field.getRows()-1)	||
-		field.getCharField()[snake.y][snake.x] == TAIL		||
+	if ((snake.x <= 0) || (snake.x >= field.getColumns() - 1) ||
+		(snake.y <= 0) || (snake.y >= field.getRows() - 1) ||
+		field.getCharField()[snake.y][snake.x] == TAIL ||
 		field.getCharField()[snake.y][snake.x] == '#')
+	{
+		PlaySound(MAKEINTRESOURCE(IDR_WAVE6), NULL, SND_RESOURCE | SND_ASYNC);
 		return 1;
+	}
 	return 0;
 }

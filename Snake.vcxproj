@@ -92,6 +92,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -194,6 +195,14 @@
     <Image Include="data\snake\Snake_headup.bmp" />
     <Image Include="data\snake\Snake_tail.bmp" />
     <Image Include="data\wall.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="data\sounds\Death.wav" />
+    <Media Include="data\sounds\Pickup1.wav" />
+    <Media Include="data\sounds\Pickup2.wav" />
+    <Media Include="data\sounds\Pickup3.wav" />
+    <Media Include="data\sounds\Pickup4.wav" />
+    <Media Include="data\sounds\PortalSound.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

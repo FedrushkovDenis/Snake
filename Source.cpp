@@ -98,7 +98,7 @@ int main()
 			myGame->snake.addTailSegment(3, 6);
 			myGame->snake.addTailSegment(3, 7);
 		}
-		myGame->field.clearField();
+		myGame->field.updateField();
 
 		myGame->snake.drawOnMap();
 		myGame->field.printField();

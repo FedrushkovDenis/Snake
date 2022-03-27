@@ -66,7 +66,7 @@ void Field::drawPortals()
 	}
 }
 
-void Field::clearField()
+void Field::updateField()
 {
 	for (int i = 0; i < this->rows; i++)
 	{
@@ -78,6 +78,20 @@ void Field::clearField()
 			}
 
 			this->drawPortals();
+		}
+	}
+}
+
+void Field::clearField()
+{
+	for (int i = 0; i < this->rows; i++)
+	{
+		for (int j = 0; j < this->columns; j++)
+		{
+			if (this->field[i][j] != '#')
+			{
+				this->field[i][j] = ' ';
+			}
 		}
 	}
 }

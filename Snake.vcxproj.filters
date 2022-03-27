@@ -37,6 +37,9 @@
     <Filter Include="Файлы ресурсов\Meal">
       <UniqueIdentifier>{73c00f4f-a4cd-4066-9487-e18fe0d26135}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы ресурсов\Sounds">
+      <UniqueIdentifier>{22e1abc6-51f2-42b6-9458-f3937a66b5de}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stuff.hpp">
@@ -188,5 +191,25 @@
     <Image Include="data\apple.bmp">
       <Filter>Файлы ресурсов\Meal</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="data\sounds\PortalSound.wav">
+      <Filter>Файлы ресурсов\Sounds</Filter>
+    </Media>
+    <Media Include="data\sounds\Pickup1.wav">
+      <Filter>Файлы ресурсов\Sounds</Filter>
+    </Media>
+    <Media Include="data\sounds\Pickup2.wav">
+      <Filter>Файлы ресурсов\Sounds</Filter>
+    </Media>
+    <Media Include="data\sounds\Pickup3.wav">
+      <Filter>Файлы ресурсов\Sounds</Filter>
+    </Media>
+    <Media Include="data\sounds\Pickup4.wav">
+      <Filter>Файлы ресурсов\Sounds</Filter>
+    </Media>
+    <Media Include="data\sounds\Death.wav">
+      <Filter>Файлы ресурсов\Sounds</Filter>
+    </Media>
   </ItemGroup>
 </Project>

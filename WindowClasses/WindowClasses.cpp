@@ -6,7 +6,6 @@
 #include <wchar.h>
 #include <corecrt_wstdlib.h>
 #include <Windows.h>
-#include <conio.h>
 
 using namespace std;
 
@@ -109,7 +108,7 @@ DWORD WINAPI GameWindow::StartWindow(HWND parent)
         WS_OVERLAPPEDWINDOW | WS_VISIBLE,
         (rctScr->right / 2) - 450, (rctScr->bottom / 4 - 220), 820, 830,
         parent, NULL, NULL, NULL);
-    
+
     rctClient = new RECT;
     GetClientRect(hwnd, rctClient);
 
@@ -147,7 +146,7 @@ DWORD WINAPI GameWindow::StartWindow(HWND parent)
                     myGame->snake.addTailSegment(3, 6);
                     myGame->snake.addTailSegment(3, 7);
 
-                    myGame->field.clearField();
+                    myGame->field.updateField();
 
                     myGame->snake.drawOnMap();
                     Singleton::getGameWindow()->Redraw(32, 32);
@@ -157,7 +156,7 @@ DWORD WINAPI GameWindow::StartWindow(HWND parent)
                     TextOut(windowDC, (rctClient->right - rctClient->left) / 3, 5, L"Press any key to start", 23);
                     continue;
                 }
-                myGame->field.clearField();
+                myGame->field.updateField();
 
                 myGame->snake.drawOnMap();
                 Singleton::getGameWindow()->Redraw(32, 32);
@@ -172,7 +171,6 @@ DWORD WINAPI GameWindow::StartWindow(HWND parent)
 
     ResourceDestroying();
     Singleton::getGame()->field.clearField();
-
     GameWindow::isOpen = false;
     GameWindow::start = false;
     ShowWindow(Singleton::getMainMenu()->getHWND(), SW_SHOW);
@@ -367,6 +365,20 @@ LRESULT WINAPI GameWindow::wndProcessor(_In_ HWND hWnd, _In_ UINT Msg, _In_ WPAR
     else if (Msg == WM_CHAR)
     {
         GameWindow::start = true;
+        if (wParam == VK_SPACE)
+        {
+            //Probably exist better version of pause menu then this :/
+            if (GameWindow::start)
+            {
+                GameWindow::start = false;
+                GameWindow* gw = Singleton::getGameWindow();
+                TextOut(gw->windowDC, (gw->rctClient->right - gw->rctClient->left) / 4, 5, L"Pause, press any key to continue", 33);
+            }
+            else
+            {
+                GameWindow::start = true;
+            }
+        }
         if (GameWindow::start)
         {
             if (wParam == VK_ESCAPE)
@@ -382,7 +394,7 @@ LRESULT WINAPI GameWindow::wndProcessor(_In_ HWND hWnd, _In_ UINT Msg, _In_ WPAR
                 myGame->snake.addTailSegment(3, 6);
                 myGame->snake.addTailSegment(3, 7);
             }
-            myGame->field.clearField();
+            myGame->field.updateField();
 
             myGame->snake.drawOnMap();
             Singleton::getGameWindow()->Redraw(32, 32);
@@ -485,7 +497,10 @@ void MainMenu::setSettings(LPCWSTR wndclassname)
 
 void MainMenu::StartWindow()
 {
-    rctScr = (LPRECT)malloc(sizeof(*rctScr));
+    /*rctScr = (LPRECT)malloc(sizeof(*rctScr));
+    GetClientRect(GetDesktopWindow(), rctScr);*/
+
+    rctScr = new RECT;
     GetClientRect(GetDesktopWindow(), rctScr);
 
     hwnd = CreateWindow(wndclass.lpszClassName, L"My Main Menu",
@@ -505,7 +520,8 @@ void MainMenu::StartWindow()
         }
         else Sleep(100);
     }
-    free(rctScr);
+    //free(rctScr);
+    delete rctScr;
 }
 
 WNDCLASS WINAPI MainMenu::ClassRegister(LPCWSTR classname, WNDPROC wndproc)
